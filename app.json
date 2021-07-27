@@ -1,11 +1,10 @@
 {
-  "expo": {
-    "name": "bcai",
-    "slug": "bcai",
-    "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
-  },
-  "name": "bcai"
+	"expo": {
+		"name": "BCAI",
+		"slug": "BCAI",
+		"version": "1.0.0",
+		"backgroundColor": "#131313",
+		"assetBundlePatterns": ["**/*"]
+	},
+	"name": "BCAI"
 }

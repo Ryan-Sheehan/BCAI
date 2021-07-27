@@ -16,142 +16,45 @@ const screenRatio = fixRatio();
 
 const BCAI = {
   screenRatio,
-
   t: {
     largeTitle: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 34 * screenRatio,
-      color: "#262626",
-    },
-    onboardingTitle: {
-      fontFamily: "Manrope-SemiBold",
-      fontSize: 28 * screenRatio,
-      color: "#262626",
-    },
-    title1: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 24 * screenRatio,
-      color: "#262626",
-    },
-    title1Alt: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 24 * screenRatio,
-      color: "#262626",
-    },
-    title2: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 22 * screenRatio,
-      color: "#262626",
-    },
-    title2Alt: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 22 * screenRatio,
-      color: "#262626",
-    },
-    title3: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 20 * screenRatio,
-      color: "#262626",
-    },
-    title3Alt: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 20 * screenRatio,
-      color: "#262626",
-    },
-    subtitle: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 18 * screenRatio,
-      color: "#262626",
-    },
-    navTitle: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 17 * screenRatio,
-      color: "#262626",
-    },
-    navItem: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 17 * screenRatio,
-      color: "#262626",
-    },
-    navItemEmphasis: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 17 * screenRatio,
-      color: "#262626",
+      fontFamily: "Inktrap-Bold",
+      fontSize: 36 * screenRatio,
+      lineHeight: 44 * screenRatio,
     },
     body: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 15 * screenRatio,
-      color: "#262626",
+      fontFamily: "Inktrap-Regular",
+      fontSize: 18 * screenRatio,
     },
     bodyEmphasis: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 15 * screenRatio,
-      color: "#262626",
+      fontFamily: "Inktrap-Bold",
+      fontSize: 18 * screenRatio,
     },
     headline: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 15 * screenRatio,
-      color: "#262626",
+      fontFamily: "Inktrap-Regular",
+      fontSize: 22 * screenRatio,
     },
-    label: {
-      fontFamily: "Manrope-SemiBold",
-      fontSize: 16 * screenRatio,
-      color: "#262626",
+    footerLabel: {
+      fontFamily: "Inktrap-Regular",
+      fontSize: 14 * screenRatio,
+    },
+    secondaryButton: {
+      fontFamily: "Inktrap-Bold",
+      fontSize: 14 * screenRatio,
+    },
+    footerName: {
+      fontFamily: "Inktrap-Bold",
+      fontSize: 14 * screenRatio,
     },
     callout: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 14 * screenRatio,
-      color: "#262626",
+      fontFamily: "Inktrap-Bold",
+      fontSize: 18 * screenRatio,
     },
-    disclaimer: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 11 * screenRatio,
-      color: "#262626",
-    },
-    subhead: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 13 * screenRatio,
-      color: "#262626",
-    },
-    caption: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 13 * screenRatio,
-      color: "#262626",
-    },
-
-    grayCaption: {
-      fontFamily: "Manrope-SemiBold",
-      fontSize: 12 * screenRatio,
-      color: "#555555",
-    },
-    button: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 15 * screenRatio,
-      color: "#262626",
-    },
-    question: {
-      fontFamily: "Manrope-SemiBold",
-      fontSize: 26 * screenRatio,
-      color: "#262626",
-    },
-    answer: {
-      fontFamily: "Manrope-Regular",
-      fontSize: 17 * screenRatio,
-      color: "#262626",
-    },
-    next: {
-      fontFamily: "Manrope-Bold",
-      fontSize: 20 * screenRatio,
-      color: "#262626",
-    },
-    chat: {
-      fontFamily: "Manrope-Medium",
-      fontSize: 16 * screenRatio,
-      lineHeight: 22 * screenRatio,
-      color: "#262626",
+    warning: {
+      fontFamily: "Inktrap-Bold",
+      fontSize: 24 * screenRatio,
     },
   },
-  // c for color
   c: {
     primary: {
       Black: "#131313",
@@ -165,7 +68,10 @@ const BCAI = {
       Green: "#7CDE7A",
       Gray: "#DDE0E5",
     },
-    secondary: {},
+    secondary: {
+      Black: "#333333",
+      SwitchGray: "#2B2B2B",
+    },
   },
 };
 
