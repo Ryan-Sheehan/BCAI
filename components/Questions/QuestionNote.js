@@ -8,6 +8,7 @@ const QuestionNote = ({ text, active }) => {
 		<AnimatePresence from={false} exitBeforeEnter>
 			{!active && (
 				<Text
+					key={text}
 					from={{
 						opacity: 0,
 					}}
@@ -19,10 +20,10 @@ const QuestionNote = ({ text, active }) => {
 					}}
 					transition={{
 						type: "timing",
-						delay: 160,
-						duration: 100,
+						delay: 400,
+						duration: 400,
 					}}
-					exitTransition={{ delay: 0, duration: 10 }}
+					exitTransition={{ delay: 0, duration: 200 }}
 					style={styles.note}
 				>
 					{text}

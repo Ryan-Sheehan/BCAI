@@ -21,18 +21,34 @@ import {
   SkipIcon,
   HelpIcon,
 } from "../../icons/BCAIIcons";
+import { motify } from "moti";
 
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
+const MotiTouchableOpacity = motify(TouchableOpacity)();
 
-const PrimaryButton = ({ label, color, icon, onPress }) => {
+const PrimaryButton = ({
+  label,
+  color,
+  icon,
+  onPress,
+  style,
+  from,
+  animate,
+  exit,
+  transition,
+}) => {
   return (
-    <TouchableOpacity
+    <MotiTouchableOpacity
+      from={from}
+      animate={animate}
+      exit={exit}
+      transition={transition}
       onPress={onPress}
-      style={{ ...styles.primaryButton, backgroundColor: color }}
+      style={{ ...styles.primaryButton, ...style, backgroundColor: color }}
     >
-      <Text style={BCAI.t.body}>{label}</Text>
+      <Text style={BCAI.t.body}>{label} </Text>
       {icon}
-    </TouchableOpacity>
+    </MotiTouchableOpacity>
   );
 };
 
@@ -46,9 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
 
-    paddingLeft: 20,
-    paddingLeft: 10,
-    height: 47 * BCAI.screenRatio,
-    width: 120 * BCAI.screenRatio,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
   },
 });

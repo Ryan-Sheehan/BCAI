@@ -31,7 +31,7 @@ function NavMenu({ navigation, menuItems }) {
   const renderItem = ({ item, index }) => {
     const { label, navigateTo } = item;
     const handlePress = () => {
-      navigation.navigate(navigateTo);
+      navigation.navigate(navigateTo, item?.params ? item?.params : {});
     };
 
     return (

@@ -4,7 +4,16 @@
 		"slug": "BCAI",
 		"version": "1.0.0",
 		"backgroundColor": "#131313",
-		"assetBundlePatterns": ["**/*"]
+		"assetBundlePatterns": ["**/*"],
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#FF6636"
+		},
+		"icon": "./assets/icon.png",
+		"ios": {
+			"bundleIdentifier": "bcai"
+		}
 	},
 	"name": "BCAI"
 }

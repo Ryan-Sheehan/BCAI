@@ -14,6 +14,9 @@ import {
   TextInput,
 } from "react-native";
 import { AnimatePresence } from "moti";
+import { Camera } from "expo-camera";
+import * as ImagePicker from "expo-image-picker";
+
 import BCAI from "../assets/constants/BCAIStyles";
 import NavBarSecondary from "../components/NavBarSecondary";
 import NavMenu from "../components/NavMenu";
@@ -21,6 +24,9 @@ import ArrowButton from "../components/ArrowButton";
 import { MicIcon, KeyboardIcon, SkipIcon, HelpIcon } from "../icons/BCAIIcons";
 import Card from "../components/Questions/Card";
 import BaseCard from "../components/Questions/BaseCard";
+import BCAICamera from "../components/Questions/BCAICamera";
+import BCAIVoiceMemo from "../components/Questions/BCAIVoiceMemo";
+import DisclaimerToast from "../components/Questions/DisclaimerToast";
 
 import ControlPanel from "../components/Questions/ControlPanel";
 import NavBarPrimary from "../components/NavBarPrimary";
@@ -31,6 +37,8 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_TOTAL = 3;
 const ANIMATION_TIME = 1500;
+const CAMERA_HEIGHT = 350;
+const VOICE_MEMO_HEIGHT = 350;
 
 const cardOptions1 = {
   header: { prefix: "On", topic: "Care" },
@@ -91,7 +99,7 @@ const cardOptions5 = {
   inputInfo: null,
   primaryColor: BCAI.c.primary.Orange,
   secondaryColor: BCAI.c.primary.White,
-  mode: "text",
+  mode: "image",
 };
 
 const cardOptions6 = {
@@ -117,34 +125,65 @@ const INIT_RESPONSES = new Array(CARD_TOTAL).fill(null);
 const Questions = ({ navigation }) => {
   const [currentCard, setCurrentCard] = useState(0);
   const [currentStack, setCurrentStack] = useState(0);
-  const [isSettingStack, setIsSettingStack] = useState(true);
+  const [isSettingStack, setIsSettingStack] = useState(false);
+  const [inputHeight, setInputHeight] = useState(0);
+
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastCleared, setToastCleared] = useState(false);
+
+  /* KEYBOARD STATE START */
   const [keyboardActive, setKeyboardActive] = useState(false);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const inputRefs = useRef([]);
+  /* KEYBOARD STATE END */
+
+  /* CAMERA STATE START */
+  const [cameraActive, setCameraActive] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [hasPermission, setHasPermission] = useState(false);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  /* CAMERA STATE END */
+
+  /* VOICE MEMO STATE START */
+  const [voiceMemoActive, setVoiceMemoActive] = useState(false);
+  const [recording, setRecording] = useState();
+  /* VOICE MEMO STATE END */
+
+  const [inputInfo, setInputInfo] = useState(null);
+  const [secondaryColor, setSecondaryColor] = useState(null);
+  const [mode, setMode] = useState(null);
+
   const [responses, setResponses] = useState(INIT_RESPONSES);
+
+  /* UPDATE CURRENT CARD INFO WHEN INDEX CHANGES */
+  useEffect(() => {
+    if (currentCard < 3) {
+      const card = allStacks[currentStack][currentCard];
+
+      setInputInfo(card.inputInfo);
+      setSecondaryColor(card.secondaryColor);
+      setMode(card.mode);
+    }
+  }, [currentCard, currentStack]);
 
   useEffect(() => {
     Keyboard.addListener("keyboardDidShow", _keyboardDidShow);
     Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
 
-    // cleanup function
     return () => {
       Keyboard.removeListener("keyboardDidShow", _keyboardDidShow);
       Keyboard.removeListener("keyboardDidHide", _keyboardDidHide);
     };
   }, []);
 
-  const getInputInfo = () => allStacks[currentStack][currentCard].inputInfo;
-  const getSecondaryColor = () =>
-    allStacks[currentStack][currentCard].secondaryColor;
-
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
   const _keyboardDidShow = (e) => {
-    setKeyboardHeight(e.endCoordinates.height - 20);
+    setInputHeight(e.endCoordinates.height - 20);
   };
   const _keyboardDidHide = (e) => {};
 
+  /* RESET STACK OF CARDS */
   useEffect(() => {
+    setRecording(undefined);
     if (currentStack > 0) {
       setResponses(INIT_RESPONSES);
       animateValue(
@@ -154,62 +193,149 @@ const Questions = ({ navigation }) => {
         0,
         ANIMATION_TIME
       );
+      setTimeout(() => {
+        setIsSettingStack(false);
+      }, 2 * ANIMATION_TIME);
     }
   }, [currentStack]);
 
-  // useEffect(() => {
-  //   console.log(responses);
-  // }, [responses]);
-
-  useEffect(() => {
-    console.log("------------");
-    console.log(isSettingStack);
-    console.log("------------");
-  }, [isSettingStack]);
-
-  const closeKeyboard = () => {
-    setKeyboardHeight(0);
-    setKeyboardActive(false);
-    Keyboard.dismiss();
-  };
-
   const goToNextCard = () => {
-    if (keyboardActive) {
-      setKeyboardHeight(0);
-      Keyboard.dismiss();
-      setTimeout(() => {
-        setKeyboardActive(false);
-      }, 210);
+    setIsSettingStack(true);
+    if (keyboardActive || cameraActive || voiceMemoActive) {
+      closeInputs();
 
       setTimeout(() => {
         setCurrentCard((p) => p + 1);
-      }, 640);
+      }, 800);
     } else {
       setCurrentCard((p) => p + 1);
     }
+    setTimeout(() => {
+      setIsSettingStack(false);
+    }, 800);
   };
 
   const handleSkip = () => {
     goToNextCard();
   };
 
-  const currentRef = inputRefs.current[currentCard];
+  /* EVENT HANDLERS */
+  const closeKeyboard = () => {
+    setKeyboardActive(false);
+    setInputHeight(0);
+
+    Keyboard.dismiss();
+  };
+
+  const closeVoiceMemo = () => {
+    setVoiceMemoActive(false);
+    setInputHeight(0);
+  };
+  const closeCamera = () => {
+    setCameraActive(false);
+    setInputHeight(0);
+  };
+
+  const closeInputs = () => {
+    closeKeyboard();
+    closeVoiceMemo();
+    closeCamera();
+  };
 
   const handleKeyboard = () => {
+    console.log("hello");
+    if (voiceMemoActive) {
+      setVoiceMemoActive(false);
+      setInputHeight(0);
+    }
     if (keyboardActive) {
       closeKeyboard();
-      currentRef.blur();
+      inputRefs.current[currentCard].blur();
     } else {
-      currentRef.focus();
       setKeyboardActive(true);
+
+      setTimeout(() => {
+        inputRefs.current[currentCard].focus();
+      }, 500);
     }
   };
 
   // TODO
-  const handleMic = () => {};
+  const handleMic = () => {
+    if (keyboardActive) {
+      closeKeyboard();
+    }
+    if (voiceMemoActive) {
+      setVoiceMemoActive(false);
+      setInputHeight(0);
+    } else {
+      setVoiceMemoActive(true);
+      setInputHeight(VOICE_MEMO_HEIGHT - 40);
+    }
+  };
+
+  const reqeustCameraAccess = async () => {};
+  useEffect(() => {
+    if (photo !== null) {
+      setCameraActive(false);
+      setInputHeight(0);
+    }
+  }, [photo]);
+
+  const handleCamera = async () => {
+    if (!hasPermission) {
+      await requestPermissions();
+    }
+    if (cameraActive) {
+      setCameraActive(false);
+      setInputHeight(0);
+    } else {
+      setCameraActive(true);
+      setInputHeight(CAMERA_HEIGHT - 40);
+    }
+  };
+  const handlePhoto = async () => {
+    if (!hasPermission) {
+      await requestPermissions();
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setPhoto(result);
+      const update = (p) => {
+        const newResponses = [...p];
+        newResponses[currentCard] = {
+          type: "image",
+          response: result,
+          altText: "",
+        };
+        return newResponses;
+      };
+      setResponses(update);
+    }
+  };
   const handleHelp = () => {};
   const handleDonate = () => {
+    const hasAlreadyDonated = responses.filter((r) => r !== null).length > 1;
+    if (!hasAlreadyDonated && !toastCleared) {
+      if (keyboardActive) {
+        closeKeyboard();
+      }
+      setToastOpen(true);
+      return;
+    }
+
     goToNextCard();
+  };
+
+  const requestPermissions = async () => {
+    const { status } = await Camera.requestPermissionsAsync();
+    setHasPermission(status === "granted");
   };
 
   return (
@@ -220,14 +346,18 @@ const Questions = ({ navigation }) => {
             {...c}
             question={c.question}
             key={c.question + i + c.primaryColor}
-            keyboardActive={keyboardActive}
+            handleKeyboard={handleKeyboard}
+            inputActive={keyboardActive || cameraActive || voiceMemoActive}
             completed={i < currentCard}
             ref={(el) => (inputRefs.current[i] = el)}
-            responses={responses}
+            response={responses[c.order - 1]}
             setResponses={setResponses}
             currentCard={currentCard}
             isSettingStack={isSettingStack}
-          ></Card>
+            active={c.order === currentCard + 1}
+            mode={mode}
+            setPhoto={setPhoto}
+          />
         );
       })}
 
@@ -240,19 +370,52 @@ const Questions = ({ navigation }) => {
       <AnimatePresence>
         {currentCard < CARD_TOTAL && (
           <ControlPanel
-            inputInfo={isSettingStack || keyboardActive ? null : getInputInfo()}
-            color={getSecondaryColor()}
+            inputInfo={inputInfo}
+            color={secondaryColor}
+            mode={mode}
             onSkip={handleSkip}
             onKeyboard={handleKeyboard}
             onMic={handleMic}
+            onCamera={handleCamera}
+            onPhoto={handlePhoto}
             onHelp={handleHelp}
             onDonate={handleDonate}
-            keyboardHeight={keyboardHeight}
-            keyboardActive={keyboardActive}
+            recording={recording}
+            inputHeight={inputHeight}
+            inputActive={keyboardActive || cameraActive || voiceMemoActive}
+            leftInputActive={keyboardActive || cameraActive}
+            rightInputActive={voiceMemoActive}
             response={responses[currentCard]}
           />
         )}
       </AnimatePresence>
+      <BCAICamera
+        cameraActive={cameraActive}
+        cameraHeight={CAMERA_HEIGHT}
+        photo={photo}
+        setPhoto={setPhoto}
+        setResponses={setResponses}
+        color={secondaryColor}
+        currentCard={currentCard}
+        setHasPermission={setHasPermission}
+        hasPermission={hasPermission}
+      />
+      <BCAIVoiceMemo
+        recording={recording}
+        setRecording={setRecording}
+        handleVoiceMemo={handleMic}
+        setResponses={setResponses}
+        color={secondaryColor}
+        currentCard={currentCard}
+        closeVoiceMemo={closeVoiceMemo}
+        voiceMemoActive={voiceMemoActive}
+        voiceMemoHeight={VOICE_MEMO_HEIGHT}
+      />
+      <DisclaimerToast
+        setToastOpen={setToastOpen}
+        toastOpen={toastOpen}
+        setToastCleared={setToastCleared}
+      />
     </SafeAreaView>
   );
 };

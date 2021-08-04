@@ -90,6 +90,7 @@ function HomeScreen({ navigation }) {
       <View style={{ width: 323 * BCAI.screenRatio, flex: 1 }}>
         <NavBarPrimary
           navigation={navigation}
+          onLogoPress={() => setHamburgerOpen(false)}
           onHamburgerPress={() => setHamburgerOpen((prev) => !prev)}
         />
         <Text style={styles.info}>

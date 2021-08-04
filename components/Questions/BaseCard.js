@@ -45,13 +45,17 @@ const BaseCard = ({
       setNoMoreStacks(true);
     }, animationTime);
   };
+
+  const goHome = () => {
+    navigation.navigate("Home");
+  };
   const goToSettings = () => {
     navigation.navigate("Settings", { pushNotifications: true });
   };
   return (
     <View style={{ ...styles.baseCard, zIndex: 0 }}>
       <View style={{ width: 323 * BCAI.screenRatio, flex: 1, zIndex: 0 }}>
-        <NavBarPrimary onHamburgerPress={() => {}} />
+        <NavBarPrimary onLogoPress={goHome} onHamburgerPress={goHome} />
 
         {!noMoreStacks && (
           <>
