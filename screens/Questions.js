@@ -16,7 +16,9 @@ import {
 import { AnimatePresence } from "moti";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+
 import { pushDonation } from "../utils/firebase";
+
 import BCAI from "../assets/constants/BCAIStyles";
 import NavBarSecondary from "../components/NavBarSecondary";
 import NavMenu from "../components/NavMenu";
@@ -182,6 +184,7 @@ const Questions = ({ navigation, route }) => {
       const card = allStacks[currentStack][currentCard];
 
       setInputInfo(null);
+
       setSecondaryColor(card.secondaryColor);
       setMode(card.mode);
     }
@@ -342,6 +345,7 @@ const Questions = ({ navigation, route }) => {
     }
   };
   const handleHelp = () => {};
+
   const handleDonate = async () => {
     const hasAlreadyDonated = responses.filter((r) => r !== null).length > 1;
     if (!hasAlreadyDonated && !toastCleared) {

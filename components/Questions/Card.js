@@ -318,8 +318,6 @@ const CardImage = ({
     }
   }, [editingImageDescription]);
 
-  console.log(secondaryColor);
-
   const rgbSecondary = hexToRgb(secondaryColor);
 
   const rgbaSecondaryTransparent = `rgba(${rgbSecondary.r},${rgbSecondary.g},${rgbSecondary.b},0)`;
@@ -425,7 +423,9 @@ const Card = (
     navigation,
     inputActive,
     handleKeyboard,
+
     topic,
+
     order,
     question,
     note,

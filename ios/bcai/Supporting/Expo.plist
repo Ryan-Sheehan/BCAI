@@ -7,6 +7,9 @@
 	<key>EXUpdatesSDKVersion</key>
 	<string>42.0.0</string>
 	<key>EXUpdatesURL</key>
+
 	<string>https://exp.host/@ryanwsheehan/BCAI</string>
+
+
 </dict>
 </plist>
