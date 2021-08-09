@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -25,11 +25,12 @@ import Hamburger from "../components/Hamburger";
 import NavBarPrimary from "../components/NavBarPrimary";
 
 import Footer from "../components/Homescreen/Footer";
+import { getActiveDeck, isDeckPublished } from "../utils/firebase";
 
 import { Person, Settings, Smiley, Database } from "../icons/BCAIIcons";
 import BCAI from "../assets/constants/BCAIStyles";
 
-function HomeScreenMain({ navigation }) {
+function HomeScreenMain({ navigation, handle, activeDeck }) {
   const animation = require("../assets/media/homepage.gif");
   return (
     <>
@@ -39,13 +40,15 @@ function HomeScreenMain({ navigation }) {
           theme="light"
           direction="right"
           label="Donate"
-          onPress={() => navigation.navigate("Main", { forceRefresh: true })}
+          disabled={activeDeck === null}
+          onPress={handle}
         />
         <ArrowButton
           style={{ marginVertical: 8 * BCAI.screenRatio }}
           theme="dark"
           direction="left"
           label="Learn More"
+          onPress={handle}
         />
       </View>
       <Image style={{ width: 323 * BCAI.screenRatio }} source={animation} />
@@ -55,6 +58,8 @@ function HomeScreenMain({ navigation }) {
 
 function HomeScreen({ navigation }) {
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [activeDeck, setActiveDeck] = useState(null);
+
   const menuItems = [
     {
       icon: <Smiley />,
@@ -77,6 +82,25 @@ function HomeScreen({ navigation }) {
       navigateTo: "Settings",
     },
   ];
+
+  const handle = async () => {
+    const deck = await getActiveDeck();
+    //setActiveDeck(deck);
+    const isPublished = await isDeckPublished();
+    if (isPublished) {
+      console.log("---------");
+      console.log("DECK IS PUBLISHED");
+      console.log("---------");
+    } else {
+      console.log("---------");
+      console.log("DECK IS NOT PUBLISHED");
+      console.log("---------");
+    }
+    navigation.navigate("Main", {
+      screen: "Questions",
+      params: { activeDeck: deck },
+    });
+  };
   return (
     <SafeAreaView style={styles.container}>
       {/*<Image
@@ -90,6 +114,7 @@ function HomeScreen({ navigation }) {
       <View style={{ width: 323 * BCAI.screenRatio, flex: 1 }}>
         <NavBarPrimary
           navigation={navigation}
+          onLogoPress={() => setHamburgerOpen(false)}
           onHamburgerPress={() => setHamburgerOpen((prev) => !prev)}
         />
         <Text style={styles.info}>
@@ -97,7 +122,11 @@ function HomeScreen({ navigation }) {
           increasingly control our daily lives more caring.
         </Text>
         {!hamburgerOpen ? (
-          <HomeScreenMain navigation={navigation} />
+          <HomeScreenMain
+            navigation={navigation}
+            handle={handle}
+            activeDeck={activeDeck}
+          />
         ) : (
           <NavMenu navigation={navigation} menuItems={menuItems} />
         )}

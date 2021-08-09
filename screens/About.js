@@ -60,6 +60,7 @@ function SettingsScreen({ navigation }) {
     {
       label: "Why should I help?",
       navigateTo: "Settings",
+      params: { pushNotifications: false }
     },
   ];
   return (

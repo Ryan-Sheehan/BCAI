@@ -54,6 +54,10 @@ const BCAI = {
       fontFamily: "Inktrap-Bold",
       fontSize: 24 * screenRatio,
     },
+    toastHeader: {
+      fontFamily: "Inktrap-Bold",
+      fontSize: 28 * screenRatio,
+    },
   },
   c: {
     primary: {

@@ -26,7 +26,7 @@ import SecondaryButton from "./SecondaryButton";
 
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
 
-const Header = ({ prefix, topic }) => {
+const Header = ({ topic }) => {
   return (
     <View
       style={{
@@ -41,7 +41,7 @@ const Header = ({ prefix, topic }) => {
           flexDirection: "row",
         }}
       >
-        <Text style={BCAI.t.body}>{prefix} </Text>
+        <Text style={BCAI.t.body}>{"On "}</Text>
 
         <Text
           style={{

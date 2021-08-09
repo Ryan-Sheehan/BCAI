@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   Button,
   SafeAreaView,
   Image,
@@ -14,24 +13,47 @@ import BCAI from "../../assets/constants/BCAIStyles";
 import NavBarSecondary from "../../components/NavBarSecondary";
 import NavMenu from "../../components/NavMenu";
 import ArrowButton from "../../components/ArrowButton";
-import { MicIcon, KeyboardIcon } from "../../icons/BCAIIcons";
-
+import {
+  MicIcon,
+  KeyboardIcon,
+  CameraIcon,
+  PhotoIcon,
+} from "../../icons/BCAIIcons";
+import { View } from "moti";
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
 
-const InputButton = ({ children, color, onPress, active, mode }) => {
+const InputButton = ({
+  children,
+  color,
+  onPress,
+  visible,
+  disabled,
+  active,
+  mode,
+}) => {
   const iconColor = active ? "#fff" : "#000";
   const backgroundColor = active ? "#000" : color;
+  console.log(visible);
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={{
-        ...styles.button,
-        backgroundColor,
-      }}
+    <View
+      animate={{ opacity: visible ? (disabled ? 0.4 : 1) : 0 }}
+      transition={{ duration: 500 }}
     >
-      {mode === "keyboard" && <KeyboardIcon color={iconColor} />}
-      {mode === "mic" && <MicIcon color={iconColor} />}
-    </TouchableOpacity>
+      <TouchableOpacity
+        onPress={onPress}
+        disabled={disabled}
+        style={{
+          ...styles.button,
+
+          backgroundColor,
+        }}
+      >
+        {mode === "keyboard" && <KeyboardIcon color={iconColor} />}
+        {mode === "mic" && <MicIcon color={iconColor} />}
+        {mode === "camera" && <CameraIcon color={iconColor} />}
+        {mode === "photo" && <PhotoIcon color={iconColor} />}
+      </TouchableOpacity>
+    </View>
   );
 };
 

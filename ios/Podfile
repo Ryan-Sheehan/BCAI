@@ -2,11 +2,20 @@ require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '11.0'
+platform :ios, '14.4.2'
+
+# pod 'Firebase/Analytics'
+# # add pods for desired Firebase products
+# # https://firebase.google.com/docs/ios/setup#available-pods
+# pod 'Firebase/Core'
+# pod 'Firebase/Database'
+# pod 'Firebase/Crashlytics'
+# pod 'Firebase/Firestore'
 
 target 'bcai' do
   use_unimodules!
   config = use_native_modules!
+  
 
   use_react_native!(:path => config["reactNativePath"])
 

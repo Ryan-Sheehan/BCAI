@@ -24,9 +24,14 @@ import {
 
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
 
-const SecondaryButton = ({ label, icon, onPress }) => {
+const SecondaryButton = ({ label, visible, disabled, icon, onPress }) => {
+  if (!visible) return null;
   return (
-    <TouchableOpacity onPress={onPress} style={styles.secondaryButton}>
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      style={{ ...styles.secondaryButton, opacity: disabled ? 0.4 : 1 }}
+    >
       <Text style={BCAI.t.secondaryButton}>{label}</Text>
       {icon}
     </TouchableOpacity>

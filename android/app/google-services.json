@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "190651307049",
+    "project_id": "bcai-86741",
+    "storage_bucket": "bcai-86741.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190651307049:android:5fa1dab854f48db1043838",
+        "android_client_info": {
+          "package_name": "com.bcai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190651307049-ti0bviu2a9h5v4pgvum568ep1q9t5d7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbcApKwWEFwDpZwyJlK8xcBUYB9szi-mo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190651307049-ti0bviu2a9h5v4pgvum568ep1q9t5d7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

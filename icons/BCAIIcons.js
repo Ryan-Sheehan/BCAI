@@ -425,6 +425,177 @@ function SendIcon(props) {
   );
 }
 
+function CameraIcon(props) {
+  return (
+    <Svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M12.483 14.886a3.067 3.067 0 100-6.133 3.067 3.067 0 000 6.133z"
+        fill={props.color ? props.color : "#000"}
+      />
+      <Path
+        d="M9.608 2.236L7.854 4.153H4.816A1.922 1.922 0 002.9 6.07v11.5c0 1.054.863 1.916 1.917 1.916H20.15a1.922 1.922 0 001.917-1.916V6.07a1.922 1.922 0 00-1.917-1.917h-3.038l-1.753-1.917h-5.75zm2.875 14.375A4.793 4.793 0 017.69 11.82a4.793 4.793 0 014.792-4.792 4.793 4.793 0 014.791 4.792 4.793 4.793 0 01-4.791 4.791z"
+        fill={props.color ? props.color : "#000"}
+      />
+    </Svg>
+  );
+}
+
+function PhotoIcon(props) {
+  return (
+    <Svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M20.89 18.948V5.11c0-1.088-.89-1.977-1.977-1.977H5.076c-1.088 0-1.977.89-1.977 1.977v13.837c0 1.087.89 1.976 1.977 1.976h13.837c1.087 0 1.977-.89 1.977-1.976zM8.535 13.512l2.47 2.975 3.46-4.458 4.448 5.93H5.076l3.459-4.447z"
+        fill={props.color ? props.color : "#000"}
+      />
+    </Svg>
+  );
+}
+
+function CloseIcon(props) {
+  return (
+    <Svg
+      width={26}
+      height={26}
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Rect
+        width={26}
+        height={26}
+        rx={13}
+        fill={props.color ? props.color : "#FFF"}
+      />
+      <Path
+        d="M17.083 9.739l-.822-.823L13 12.177l-3.262-3.26-.822.822 3.26 3.26-3.26 3.262.822.822L13 13.823l3.26 3.26.823-.822L13.823 13l3.26-3.261z"
+        fill={props.crossColor ? props.crossColor : "#000"}
+      />
+    </Svg>
+  );
+}
+
+function EditIcon(props) {
+  return (
+    <Svg
+      width={16}
+      height={16}
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M2 11.5V14h2.5l7.373-7.373-2.5-2.5L2 11.5zm11.807-6.806c.26-.26.26-.68 0-.94l-1.56-1.56a.664.664 0 00-.94 0l-1.22 1.22 2.5 2.5 1.22-1.22z"
+        fill="#000"
+      />
+    </Svg>
+  );
+}
+
+function BigMicIcon(props) {
+  return (
+    <Svg
+      width={48}
+      height={48}
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M24 28c3.32 0 5.98-2.68 5.98-6L30 10c0-3.32-2.68-6-6-6s-6 2.68-6 6v12c0 3.32 2.68 6 6 6zm10.6-6c0 6-5.08 10.2-10.6 10.2S13.4 28 13.4 22H10c0 6.82 5.44 12.46 12 13.44V42h4v-6.56c6.56-.96 12-6.6 12-13.44h-3.4z"
+        fill="#000"
+      />
+    </Svg>
+  );
+}
+
+function SineIcon(props) {
+  return (
+    <Svg
+      width={156}
+      height={118}
+      viewBox="0 0 156 118"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Rect y={46} width={6} height={26} rx={3} fill="#222" />
+      <Rect x={150} y={46} width={6} height={26} rx={3} fill="#222" />
+      <Rect x={75} y={46} width={6} height={26} rx={3} fill="#222" />
+      <Rect x={19} y={27} width={6} height={64} rx={3} fill="#222" />
+      <Rect x={94} y={27} width={6} height={64} rx={3} fill="#222" />
+      <Rect x={56} y={27} width={6} height={64} rx={3} fill="#222" />
+      <Rect x={131} y={27} width={6} height={64} rx={3} fill="#222" />
+      <Rect x={38} width={6} height={118} rx={3} fill="#222" />
+      <Rect x={113} width={6} height={118} rx={3} fill="#222" />
+    </Svg>
+  );
+}
+
+function PlayIcon(props) {
+  return (
+    <Svg
+      width={24}
+      height={25}
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path d="M8 5.5v14l11-7-11-7z" fill="#000" />
+    </Svg>
+  );
+}
+
+function SmallCloseIcon(props) {
+  return (
+    <Svg
+      width={19}
+      height={19}
+      viewBox="0 0 19 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M9.167.333A9.158 9.158 0 000 9.5a9.158 9.158 0 009.167 9.167A9.158 9.158 0 0018.333 9.5 9.158 9.158 0 009.167.333zm4.583 12.458l-1.293 1.292-3.29-3.29-3.291 3.29-1.293-1.292L7.874 9.5l-3.29-3.29 1.292-1.293 3.29 3.29 3.291-3.29 1.293 1.292-3.29 3.29 3.29 3.292z"
+        fill="#000"
+      />
+    </Svg>
+  );
+}
+
+function PauseIcon(props) {
+  return (
+    <Svg
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path fill="#000" d="M7 6h4v12H7zM14 6h4v12h-4z" />
+    </Svg>
+  );
+}
+
 export {
   ArrowLeft,
   ArrowRight,
@@ -440,8 +611,17 @@ export {
   CardTwo,
   CardThree,
   MicIcon,
+  BigMicIcon,
   KeyboardIcon,
   SkipIcon,
   HelpIcon,
   SendIcon,
+  CameraIcon,
+  PhotoIcon,
+  CloseIcon,
+  SmallCloseIcon,
+  EditIcon,
+  SineIcon,
+  PlayIcon,
+  PauseIcon,
 };
