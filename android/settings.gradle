@@ -1,4 +1,4 @@
-rootProject.name = 'bcai'
+rootProject.name = 'BCAI'
 
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 includeUnimodulesProjects()
