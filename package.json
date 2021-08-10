@@ -4,7 +4,14 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/bcai/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "studio/"
+    ]
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
