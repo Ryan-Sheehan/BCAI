@@ -8,21 +8,23 @@ import "firebase/firestore";
 //import "firebase/functions";
 import "firebase/storage";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // Initialize Firebase
 
 // Get a reference to the database service
 var database = firebase.database();
 
-const pushDonation = async (question, donation) => {
-	const questionSlug = question
-		.replaceAll(" ", "-")
-		.replaceAll(".", "")
-		.replaceAll("#", "")
-		.replaceAll("$", "")
-		.replaceAll("[", "")
-		.replaceAll("]", "")
-		.replaceAll("?", "")
-		.toLowerCase();
+const pushDonation = async (key, donation) => {
+	// const questionSlug = question
+	// 	.replaceAll(" ", "-")
+	// 	.replaceAll(".", "")
+	// 	.replaceAll("#", "")
+	// 	.replaceAll("$", "")
+	// 	.replaceAll("[", "")
+	// 	.replaceAll("]", "")
+	// 	.replaceAll("?", "")
+	// 	.toLowerCase();
 
 	const needsToBeUploaded =
 		donation.type === "image" || donation.type === "voice";
@@ -33,23 +35,32 @@ const pushDonation = async (question, donation) => {
 			.ref(`${donation.type}/${new Date().getTime()}`);
 		await ref.put(blob);
 		donation.response;
-		await Promise.all([
-			firebase
-				.database()
-				.ref("/" + questionSlug)
-				.push({
-					donation,
-				}),
-		]);
+		const snapshot = await firebase
+			.database()
+			.ref("/" + key)
+			.push({
+				donation,
+			});
+		const { key } = snapshot;
 	} else {
-		await Promise.all([
-			firebase
-				.database()
-				.ref("/" + questionSlug)
-				.push({
-					donation,
-				}),
-		]);
+		const snapshot = await firebase
+			.database()
+			.ref("/" + key)
+			.push({
+				donation,
+			});
+		const { key } = snapshot;
+
+		const donations = await AsyncStorage.getItem("donations");
+		if (donations !== null) {
+			const donationArr = JSON.parse(donations);
+			await AsyncStorage.setItem(
+				"donations",
+				JSON.stringify([key, ...donationArr])
+			);
+		} else {
+			await AsyncStorage.setItem("donations", JSON.stringify([key]));
+		}
 	}
 };
 

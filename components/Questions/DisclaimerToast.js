@@ -21,7 +21,7 @@ const { height, width } = Dimensions.get("window");
 const DisclaimerToast = ({ toastOpen, setToastOpen, setToastCleared }) => {
   return (
     <View
-      animate={{ translateY: toastOpen ? 0 : height }}
+      animate={{ translateY: toastOpen ? 0 : height + 200 }}
       transition={{ type: "timing", duration: 800 }}
       style={{
         position: "absolute",
@@ -30,10 +30,12 @@ const DisclaimerToast = ({ toastOpen, setToastOpen, setToastCleared }) => {
         right: 0,
 
         zIndex: 10000,
+        elevation: 10000,
         alignSelf: "stretch",
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 30,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
         paddingVertical: 40,
         backgroundColor: BCAI.c.primary.Black,
       }}

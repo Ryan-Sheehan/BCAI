@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: -30,
     zIndex: 100,
+    elevation: 100,
     borderWidth: 0,
     borderRadius: 30,
 

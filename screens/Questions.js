@@ -16,6 +16,7 @@ import {
 import { AnimatePresence } from "moti";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { pushDonation } from "../utils/firebase";
 
@@ -41,6 +42,9 @@ const CARD_TOTAL = 3;
 const ANIMATION_TIME = 1500;
 const CAMERA_HEIGHT = 350;
 const VOICE_MEMO_HEIGHT = 350;
+const TOAST = "data-anonymity-info-toast";
+const TEXT_MODAL = "text-modal-seen";
+const IMAGE_MODAL = "image-modal-seen";
 
 const cardOptions1 = {
   topic: "Care",
@@ -129,6 +133,8 @@ const TEXT_INPUT_INFO = "Choose to Answer \nwith Text or Audio";
 const Questions = ({ navigation, route }) => {
   const {
     activeDeck: { cardGroups },
+    startingStack,
+    startingCard,
   } = route.params;
 
   const stacks = cardGroups.map((cg) => cg.cards);
@@ -142,13 +148,146 @@ const Questions = ({ navigation, route }) => {
     }));
   });
 
+  const getData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        // value previously stored
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+
+  // const getCardsRespondedTo = async () => {
+  //   try {
+  //     const keys = cardGroups.map((cg, i) => {
+  //       return cg.cards.map((c, i) => c._key);
+  //     });
+
+  //     const seen = await Promise.all([
+  //       keys[0].map(async (c) => await AsyncStorage.getItem(c)),
+  //     ]);
+
+  //     // const whichCardsAnswered = await Promise.all([
+  //     //   cardGroups.map(async (cg, i) => {
+  //     //     return await Promise.all([
+  //     //       cg.cards.map(async (c, i) => await AsyncStorage.getItem(c._key)),
+  //     //     ]);
+  //     //   }),
+  //     // ]);
+
+  //     console.log("0000000000000");
+  //     console.log(seen);
+  //     console.log("0000000000000");
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  const storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  useEffect(() => {
+    const getCardsRespondedTo = async () => {
+      try {
+        const cardKeys = cardGroups.map((cg, i) => {
+          return cg.cards.map((c, i) => c._key);
+        });
+
+        const answeredCardKeys = await Promise.all(
+          cardKeys.map(
+            async (k) =>
+              await Promise.all(
+                k.map(async (c) => await AsyncStorage.getItem(c))
+              )
+          )
+        );
+        var BreakException = {};
+
+        try {
+          answeredCardKeys.forEach((ack, i) => {
+            if (i === 3 && !ack.includes(null)) {
+              setCurrentStack(3);
+              setCurrentCard(3);
+              setNoMoreStacks(true);
+
+              throw BreakException;
+            }
+            ack.forEach((c, j) => {
+              if (c === null) {
+                setCurrentStack(i);
+                setCurrentCard(j);
+
+                throw BreakException;
+              }
+            });
+          });
+        } catch (e) {
+          if (e !== BreakException) throw e;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    const getAreModalsCleared = async () => {
+      const wasToastSeen = await AsyncStorage.getItem(TOAST);
+      setToastCleared(wasToastSeen === "answered");
+      const wasTextModalSeen = await AsyncStorage.getItem(TEXT_MODAL);
+      setTextInputModalSeen(wasTextModalSeen === "answered");
+      const wasImageModalSeen = await AsyncStorage.getItem(IMAGE_MODAL);
+      setImageInputModalSeen(wasImageModalSeen === "answered");
+
+      if (wasTextModalSeen === "answered" && wasImageModalSeen === "answered") {
+        setInputInfo(null);
+      }
+    };
+
+    const resetAreModalsCleared = async () => {
+      await AsyncStorage.removeItem(TOAST);
+
+      await AsyncStorage.removeItem(TEXT_MODAL);
+
+      await AsyncStorage.removeItem(IMAGE_MODAL);
+    };
+
+    const resetCardsRespondedTo = async () => {
+      const cardKeys = cardGroups.map((cg, i) => {
+        return cg.cards.map((c, i) => c._key);
+      });
+
+      const answeredCardKeys = await Promise.all(
+        cardKeys.map(
+          async (k) =>
+            await Promise.all(
+              k.map(async (c) => await AsyncStorage.removeItem(c))
+            )
+        )
+      );
+    };
+    const resetDonations = async () => {
+      await AsyncStorage.removeItem("donations");
+    };
+    //resetDonations();
+    //resetCardsRespondedTo();
+    //getCardsRespondedTo();
+    getAreModalsCleared();
+    //resetAreModalsCleared();
+  }, []);
+
   const allStacks = [...stacksWithOrder];
   const stackLengths = cardGroups.map((cg) => cg.cards.length);
 
-  console.log(stackLengths);
-  console.log(stacks.length);
-  const [currentCard, setCurrentCard] = useState(0);
-  const [currentStack, setCurrentStack] = useState(0);
+  const [currentCard, setCurrentCard] = useState(startingCard);
+  const [currentStack, setCurrentStack] = useState(startingStack);
+  const [noMoreStacks, setNoMoreStacks] = useState(false);
+
   const [isSettingStack, setIsSettingStack] = useState(false);
   const [inputHeight, setInputHeight] = useState(0);
 
@@ -177,17 +316,32 @@ const Questions = ({ navigation, route }) => {
   const [mode, setMode] = useState(null);
 
   const [responses, setResponses] = useState(INIT_RESPONSES);
+  const [textInputModalSeen, setTextInputModalSeen] = useState(false);
+  const [imageInputModalSeen, setImageInputModalSeen] = useState(false);
 
   /* UPDATE CURRENT CARD INFO WHEN INDEX CHANGES */
   useEffect(() => {
-    if (currentCard < 3) {
-      const card = allStacks[currentStack][currentCard];
+    const handleCardChange = async () => {
+      if (currentCard < 3) {
+        const card = allStacks[currentStack][currentCard];
 
-      setInputInfo(null);
+        setInputInfo(null);
 
-      setSecondaryColor(card.secondaryColor);
-      setMode(card.mode);
-    }
+        setSecondaryColor(card.secondaryColor);
+        const { mode } = card;
+        if (mode === "text" && !textInputModalSeen) {
+          setInputInfo("Choose to Answer with Text or Audio");
+        } else if (mode === "image" && !imageInputModalSeen) {
+          setInputInfo(
+            "Take a photo or select a photo from your library to answer this question."
+          );
+        } else {
+          setInputInfo(null);
+        }
+        setMode(mode);
+      }
+    };
+    handleCardChange();
   }, [currentCard, currentStack]);
 
   useEffect(() => {
@@ -208,24 +362,42 @@ const Questions = ({ navigation, route }) => {
 
   /* RESET STACK OF CARDS */
   useEffect(() => {
-    setRecording(undefined);
-    if (currentStack > 0) {
-      setResponses(INIT_RESPONSES);
-      animateValue(
-        setCurrentCard,
-        setIsSettingStack,
-        CARD_TOTAL,
-        0,
-        ANIMATION_TIME
-      );
+    if (startingStack === 3) {
+      setNoMoreStacks(true);
+    }
+    if (currentStack === 3) {
       setTimeout(() => {
-        setIsSettingStack(false);
-      }, 2 * ANIMATION_TIME);
+        setNoMoreStacks(true);
+      }, ANIMATION_TIME);
     }
   }, [currentStack]);
 
-  const goToNextCard = () => {
+  const handleNewStack = async () => {
+    setRecording(undefined);
+    setCurrentStack((p) => p + 1);
+    setResponses(INIT_RESPONSES);
+    animateValue(
+      setCurrentCard,
+      setIsSettingStack,
+      CARD_TOTAL,
+      0,
+      ANIMATION_TIME
+    );
+    setTimeout(() => {
+      setIsSettingStack(false);
+    }, 2 * ANIMATION_TIME);
+  };
+
+  const goToNextCard = async () => {
     setIsSettingStack(true);
+    if (mode === "image" && !imageInputModalSeen) {
+      setImageInputModalSeen(true);
+      await storeData(IMAGE_MODAL, "answered");
+    }
+    if (mode === "text" && !textInputModalSeen) {
+      setTextInputModalSeen(true);
+      await storeData(TEXT_MODAL, "answered");
+    }
     if (keyboardActive || cameraActive || voiceMemoActive) {
       closeInputs();
 
@@ -240,8 +412,11 @@ const Questions = ({ navigation, route }) => {
     }, 800);
   };
 
-  const handleSkip = () => {
-    goToNextCard();
+  const handleSkip = async () => {
+    const card = allStacks[currentStack][currentCard];
+
+    await storeData(card._key, "answered");
+    await goToNextCard();
   };
 
   /* EVENT HANDLERS */
@@ -268,7 +443,6 @@ const Questions = ({ navigation, route }) => {
   };
 
   const handleKeyboard = () => {
-    console.log("hello");
     if (voiceMemoActive) {
       setVoiceMemoActive(false);
       setInputHeight(0);
@@ -346,6 +520,11 @@ const Questions = ({ navigation, route }) => {
   };
   const handleHelp = () => {};
 
+  const handleToastCleared = async () => {
+    await storeData(TOAST, "answered");
+    setToastCleared(true);
+  };
+
   const handleDonate = async () => {
     const hasAlreadyDonated = responses.filter((r) => r !== null).length > 1;
     if (!hasAlreadyDonated && !toastCleared) {
@@ -358,9 +537,10 @@ const Questions = ({ navigation, route }) => {
 
     const card = allStacks[currentStack][currentCard];
 
-    await pushDonation(card.question, responses[currentCard]);
+    await storeData(card._key, "answered");
+    await pushDonation(card._key, responses[currentCard]);
 
-    goToNextCard();
+    await goToNextCard();
   };
 
   const requestPermissions = async () => {
@@ -393,9 +573,10 @@ const Questions = ({ navigation, route }) => {
 
       <BaseCard
         navigation={navigation}
+        handlePress={handleNewStack}
+        noMoreStacks={noMoreStacks}
         currentStack={currentStack}
         setCurrentStack={setCurrentStack}
-        animationTime={ANIMATION_TIME}
       />
       <AnimatePresence>
         {currentCard < CARD_TOTAL && (
@@ -444,7 +625,7 @@ const Questions = ({ navigation, route }) => {
       <DisclaimerToast
         setToastOpen={setToastOpen}
         toastOpen={toastOpen}
-        setToastCleared={setToastCleared}
+        setToastCleared={handleToastCleared}
       />
     </SafeAreaView>
   );

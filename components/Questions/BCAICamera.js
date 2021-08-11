@@ -59,7 +59,10 @@ const BCAICamera = ({
 
   const takePicture = async () => {
     try {
+      console.log("photo taken");
+      console.log("");
       const currentPhoto = await cameraRef.current.takePictureAsync();
+      console.log(currentPhoto);
       setPictureTaken(true);
       setPhoto(currentPhoto);
       const update = (p) => {
@@ -130,6 +133,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: -30,
     zIndex: 100,
+    elevation: 100,
     borderWidth: 8,
     borderRadius: 30,
 

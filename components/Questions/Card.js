@@ -49,6 +49,8 @@ import Header from "./Header";
 
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
 
+const { height, width } = Dimensions.get("window");
+
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const CARD_TOTAL = 3;
@@ -57,12 +59,14 @@ const MotiTextInput = motify(TextInput)();
 
 const MotiImage = motify(Image)();
 
-const FullHeightSvg = ({ children, cardPos, completed }) => (
+const FullHeightSvg = ({ children, cardPos, completed, backgroundColor }) => (
   <View
     animate={{ translateX: completed ? -SCREEN_WIDTH : 0 }}
     style={{
       ...styles.fullHeightSVG,
       zIndex: cardPos,
+      elevation: cardPos,
+      backgroundColor,
     }}
   >
     <Svg height="100%" width="100%" viewBox="0 0 375 812">
@@ -496,7 +500,11 @@ const Card = (
     <>
       <View
         animate={{ translateX: completed ? -SCREEN_WIDTH : 0 }}
-        style={{ ...styles.container, zIndex: cardPosScaled + 1 }}
+        style={{
+          ...styles.container,
+          zIndex: cardPosScaled + 1,
+          elevation: cardPosScaled + 1,
+        }}
       >
         <View style={styles.containerInner}>
           <Header topic={topic} />
@@ -552,7 +560,12 @@ const Card = (
           </AnimatePresence>
         </View>
       </View>
-      <FullHeightSvg cardPos={cardPosScaled} completed={completed}>
+
+      <FullHeightSvg
+        cardPos={cardPosScaled}
+        completed={completed}
+        backgroundColor={primaryColor}
+      >
         {order === 1 && <CardThree color={primaryColor} />}
         {order === 2 && <CardTwo color={primaryColor} />}
         {order === 3 && <CardOne color={primaryColor} />}
@@ -567,6 +580,7 @@ export default forwardRefCard;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
@@ -594,8 +608,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
-    elevation: 5,
   },
   textInput: {
     ...BCAI.t.body,

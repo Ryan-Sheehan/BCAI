@@ -216,7 +216,7 @@ const InputInfo = ({ color, inputActive, response, inputInfo }) => {
             exit={{
               opacity: 0,
             }}
-            transition={{ delay: 600, duration: 400 }}
+            transition={{ delay: 1200, duration: 400 }}
             exitTransition={{ delay: 0, duration: 100 }}
             style={{ ...styles.controlPanelInfo, backgroundColor: color }}
           >
@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
     width: 323 * BCAI.screenRatio,
     flex: 1,
     zIndex: 100,
+    elevation: 100,
   },
   controlPanelInfoContainer: {
     justifyContent: "space-between",

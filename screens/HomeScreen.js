@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FastImage from "react-native-fast-image";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -43,13 +44,13 @@ function HomeScreenMain({ navigation, handle, activeDeck }) {
           disabled={activeDeck === null}
           onPress={handle}
         />
-        <ArrowButton
+        {/*<ArrowButton
           style={{ marginVertical: 8 * BCAI.screenRatio }}
           theme="dark"
           direction="left"
           label="Learn More"
           onPress={handle}
-        />
+        />*/}
       </View>
       <Image style={{ width: 323 * BCAI.screenRatio }} source={animation} />
     </>
@@ -85,7 +86,53 @@ function HomeScreen({ navigation }) {
 
   const handle = async () => {
     const deck = await getActiveDeck();
-    //setActiveDeck(deck);
+
+    let startingCard = 0;
+    let startingStack = 0;
+
+    try {
+      const cardKeys = deck.cardGroups.map((cg, i) => {
+        return cg.cards.map((c, i) => c._key);
+      });
+
+      const answeredCardKeys = await Promise.all(
+        cardKeys.map(
+          async (k) =>
+            await Promise.all(k.map(async (c) => await AsyncStorage.getItem(c)))
+        )
+      );
+      var BreakException = {};
+
+      try {
+        answeredCardKeys.forEach((ack, i) => {
+          if (i === 3 && !ack.includes(null)) {
+            startingStack = 3;
+            startingCard = 3;
+            // setStartingStack(3);
+            // setStartingCard(3);
+            // setNoMoreStacks(true);
+
+            throw BreakException;
+          }
+          ack.forEach((c, j) => {
+            if (c === null) {
+              startingStack = i;
+              startingCard = j;
+              // setStartingStack(i);
+              // setStartingCard(j);
+              console.log(`homescreen starting stack ${i}`);
+              console.log(`homescreen starting card ${j}`);
+              throw BreakException;
+            }
+          });
+        });
+      } catch (e) {
+        if (e !== BreakException) throw e;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+
     const isPublished = await isDeckPublished();
     if (isPublished) {
       console.log("---------");
@@ -96,9 +143,10 @@ function HomeScreen({ navigation }) {
       console.log("DECK IS NOT PUBLISHED");
       console.log("---------");
     }
+
     navigation.navigate("Main", {
       screen: "Questions",
-      params: { activeDeck: deck },
+      params: { activeDeck: deck, startingCard, startingStack },
     });
   };
   return (

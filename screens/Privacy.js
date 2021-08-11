@@ -57,7 +57,8 @@ function SettingsScreen({ navigation }) {
           you don’t include any information in your answers that can be used to
           personally identify you or people you know.
         </Text>
-        <View style={{ marginBottom: 60 }}>
+
+        {/*<View style={{ marginBottom: 60 }}>
           <Text
             style={{
               ...BCAI.t.largeTitle,
@@ -67,7 +68,7 @@ function SettingsScreen({ navigation }) {
             FAQ
           </Text>
           <NavMenu navigation={navigation} menuItems={menuItems} />
-        </View>
+        </View>*/}
 
         <View style={{ marginBottom: 60 }}>
           <Text
@@ -94,6 +95,16 @@ function SettingsScreen({ navigation }) {
           >
             *Remember that your donations are published every month. We cannot
             guarantee that someone has not made copies of your answers.
+          </Text>
+        </View>
+        <View style={{ marginBottom: 60 }}>
+          <Text
+            style={{
+              ...BCAI.t.largeTitle,
+              color: BCAI.c.primary.White,
+            }}
+          >
+            My Data
           </Text>
         </View>
       </ScrollView>

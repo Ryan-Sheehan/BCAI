@@ -2,7 +2,7 @@
 	"expo": {
 		"name": "BCAI",
 		"slug": "BCAI",
-		"owner": "ryanwsheehan",
+		"owner": "bcai",
 		"version": "1.0.0",
 		"backgroundColor": "#131313",
 		"assetBundlePatterns": ["**/*"],
@@ -18,7 +18,7 @@
 			"buildNumber": "1.0.0"
 		},
 		"android": {
-			"package": "bcai",
+			"package": "com.bcai.app",
 			"versionCode": 1
 		}
 	},

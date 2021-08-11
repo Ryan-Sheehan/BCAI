@@ -32,19 +32,14 @@ const BaseCard = ({
   navigation,
   currentStack,
   setCurrentStack,
-  animationTime,
+  handlePress,
+  noMoreStacks,
 }) => {
   const animation = require("../../assets/media/homepage.gif");
-  const [noMoreStacks, setNoMoreStacks] = useState(false);
-  useEffect(() => {
-    console.log(noMoreStacks);
-  }, [noMoreStacks]);
-  const handlePress = () => {
-    setCurrentStack((p) => p + 1);
-    setTimeout(() => {
-      setNoMoreStacks(true);
-    }, animationTime);
-  };
+
+  // const handlePress = () => {
+  //   setCurrentStack((p) => p + 1);
+  // };
 
   const goHome = () => {
     navigation.navigate("Home");

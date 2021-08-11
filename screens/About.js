@@ -60,7 +60,7 @@ function SettingsScreen({ navigation }) {
     {
       label: "Why should I help?",
       navigateTo: "Settings",
-      params: { pushNotifications: false }
+      params: { pushNotifications: false },
     },
   ];
   return (
@@ -109,7 +109,8 @@ function SettingsScreen({ navigation }) {
           reductive and encourage complexity, plurality, kindness, and
           generosity instead.
         </Text>
-        <View style={{ marginBottom: 60 }}>
+
+        {/*<View style={{ marginBottom: 60 }}>
           <Text
             style={{
               ...BCAI.t.largeTitle,
@@ -119,7 +120,7 @@ function SettingsScreen({ navigation }) {
             FAQ
           </Text>
           <NavMenu navigation={navigation} menuItems={menuItems} />
-        </View>
+        </View>*/}
       </ScrollView>
     </SafeAreaView>
   );
