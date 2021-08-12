@@ -126,6 +126,7 @@ const ActionBar = ({
   mode,
   leftInputActive,
   rightInputActive,
+  isDonating,
 }) => {
   return (
     <View style={{ ...styles.actionBar }}>
@@ -172,6 +173,7 @@ const ActionBar = ({
               color={color}
               icon={<SendIcon />}
               onPress={onDonate}
+              isLoading={isDonating}
             />
           </View>
         )}
@@ -285,6 +287,7 @@ const ControlPanel = ({
   leftInputActive,
   rightInputActive,
   mode,
+  isDonating,
 }) => {
   return (
     <ControlPanelWrapper inputActive={inputActive} inputHeight={inputHeight}>
@@ -308,6 +311,7 @@ const ControlPanel = ({
         onMic={onMic}
         leftInputActive={leftInputActive}
         rightInputActive={rightInputActive}
+        isDonating={isDonating}
       />
     </ControlPanelWrapper>
   );

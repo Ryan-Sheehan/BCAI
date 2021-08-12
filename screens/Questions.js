@@ -17,7 +17,11 @@ import { AnimatePresence } from "moti";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import {
+  resetAreModalsCleared,
+  resetCardsRespondedTo,
+  resetDonations,
+} from "../utils/localStorage";
 import { pushDonation } from "../utils/firebase";
 
 import BCAI from "../assets/constants/BCAIStyles";
@@ -148,17 +152,6 @@ const Questions = ({ navigation, route }) => {
     }));
   });
 
-  const getData = async (key) => {
-    try {
-      const value = await AsyncStorage.getItem(key);
-      if (value !== null) {
-        // value previously stored
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-
   // const getCardsRespondedTo = async () => {
   //   try {
   //     const keys = cardGroups.map((cg, i) => {
@@ -249,36 +242,11 @@ const Questions = ({ navigation, route }) => {
       }
     };
 
-    const resetAreModalsCleared = async () => {
-      await AsyncStorage.removeItem(TOAST);
-
-      await AsyncStorage.removeItem(TEXT_MODAL);
-
-      await AsyncStorage.removeItem(IMAGE_MODAL);
-    };
-
-    const resetCardsRespondedTo = async () => {
-      const cardKeys = cardGroups.map((cg, i) => {
-        return cg.cards.map((c, i) => c._key);
-      });
-
-      const answeredCardKeys = await Promise.all(
-        cardKeys.map(
-          async (k) =>
-            await Promise.all(
-              k.map(async (c) => await AsyncStorage.removeItem(c))
-            )
-        )
-      );
-    };
-    const resetDonations = async () => {
-      await AsyncStorage.removeItem("donations");
-    };
     //resetDonations();
     //resetCardsRespondedTo();
+    //resetAreModalsCleared();
     //getCardsRespondedTo();
     getAreModalsCleared();
-    //resetAreModalsCleared();
   }, []);
 
   const allStacks = [...stacksWithOrder];
@@ -293,6 +261,7 @@ const Questions = ({ navigation, route }) => {
 
   const [toastOpen, setToastOpen] = useState(false);
   const [toastCleared, setToastCleared] = useState(false);
+  const [isDonating, setIsDonating] = useState(false);
 
   /* KEYBOARD STATE START */
   const [keyboardActive, setKeyboardActive] = useState(false);
@@ -302,8 +271,12 @@ const Questions = ({ navigation, route }) => {
   /* CAMERA STATE START */
   const [cameraActive, setCameraActive] = useState(false);
   const [photo, setPhoto] = useState(null);
+
   const [hasPermission, setHasPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [pictureTaken, setPictureTaken] = useState(false);
+  const [editingImageDescription, setEditingImageDescription] = useState(false);
+  const [hasBegunEditing, setHasBegunEditing] = useState(false);
   /* CAMERA STATE END */
 
   /* VOICE MEMO STATE START */
@@ -511,7 +484,7 @@ const Questions = ({ navigation, route }) => {
         newResponses[currentCard] = {
           type: "image",
           response: result,
-          altText: "",
+          altText: null,
         };
         return newResponses;
       };
@@ -525,7 +498,20 @@ const Questions = ({ navigation, route }) => {
     setToastCleared(true);
   };
 
+  const clearPhoto = () => {
+    setPhoto(null);
+    closeInputs();
+    setEditingImageDescription(false);
+    const update = (p) => {
+      const newResponses = [...p];
+      newResponses[currentCard] = null;
+      return newResponses;
+    };
+    setResponses(update);
+  };
+
   const handleDonate = async () => {
+    setIsDonating(true);
     const hasAlreadyDonated = responses.filter((r) => r !== null).length > 1;
     if (!hasAlreadyDonated && !toastCleared) {
       if (keyboardActive) {
@@ -534,11 +520,17 @@ const Questions = ({ navigation, route }) => {
       setToastOpen(true);
       return;
     }
+    setEditingImageDescription(false);
+    closeInputs();
 
     const card = allStacks[currentStack][currentCard];
 
     await storeData(card._key, "answered");
     await pushDonation(card._key, responses[currentCard]);
+    setPictureTaken(false);
+    setPhoto(null);
+    setRecording();
+    setIsDonating(false);
 
     await goToNextCard();
   };
@@ -567,6 +559,12 @@ const Questions = ({ navigation, route }) => {
             active={c.order === currentCard + 1}
             mode={mode}
             setPhoto={setPhoto}
+            clearPhoto={clearPhoto}
+            editingImageDescription={editingImageDescription}
+            setEditingImageDescription={setEditingImageDescription}
+            hasBegunEditing={hasBegunEditing}
+            setHasBegunEditing={setHasBegunEditing}
+            closeInputs={closeInputs}
           />
         );
       })}
@@ -597,10 +595,13 @@ const Questions = ({ navigation, route }) => {
             leftInputActive={keyboardActive || cameraActive}
             rightInputActive={voiceMemoActive}
             response={responses[currentCard]}
+            isDonating={isDonating}
           />
         )}
       </AnimatePresence>
       <BCAICamera
+        pictureTaken={pictureTaken}
+        setPictureTaken={setPictureTaken}
         cameraActive={cameraActive}
         cameraHeight={CAMERA_HEIGHT}
         photo={photo}

@@ -12,7 +12,7 @@ function ArrowButton({ direction, theme, onPress, label, style }) {
   const textMarginRight = direction === "right" ? 8 * BCAI.screenRatio : 0;
   const textMarginLeft = direction === "right" ? 0 : 8 * BCAI.screenRatio;
   return (
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
       <TouchableOpacity
         style={{
           ...styles.button,

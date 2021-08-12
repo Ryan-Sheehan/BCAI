@@ -312,9 +312,13 @@ const CardImage = ({
   setEditingImageDescription,
   hasBegunEditing,
   setHasBegunEditing,
+  closeInputs,
 }) => {
-  console.log(response);
   const altTextRef = useRef();
+
+  useEffect(() => {
+    console.log(response);
+  }, [response.altText]);
 
   useEffect(() => {
     if (editingImageDescription) {
@@ -372,14 +376,16 @@ const CardImage = ({
           flexDirection: "row",
         }}
       >
-        {editingImageDescription ? (
+        {editingImageDescription || response.altText !== null ? (
           <MotiTextInput
             key="add-desc-input"
             from={{ opacity: 0 }}
             animate={{
               opacity: 1,
               backgroundColor: !hasBegunEditing
-                ? rgbaSecondaryTransparent
+                ? response.altText !== null
+                  ? rgbaSecondaryOpaque
+                  : rgbaSecondaryTransparent
                 : rgbaSecondaryOpaque,
             }}
             exit={{ opacity: 0 }}
@@ -395,6 +401,7 @@ const CardImage = ({
 
               setEditingImageDescription(false);
               setHasBegunEditing(false);
+              closeInputs();
             }}
             underlineColorAndroid="transparent"
             style={styles.textInput}
@@ -446,11 +453,15 @@ const Card = (
     mode,
     setPhoto,
     voiceMemoLoading,
+    clearPhoto,
+    editingImageDescription,
+    setEditingImageDescription,
+    hasBegunEditing,
+    setHasBegunEditing,
+    closeInputs,
   },
   ref
 ) => {
-  const [editingImageDescription, setEditingImageDescription] = useState(false);
-  const [hasBegunEditing, setHasBegunEditing] = useState(false);
   const cardPos = CARD_TOTAL + 1 - order;
   const cardPosScaled = 10 * cardPos;
 
@@ -474,21 +485,12 @@ const Card = (
       if (text.length === 0 && hasBegunEditing) {
         setEditingImageDescription(false);
         setHasBegunEditing(false);
+        newResponses[order - 1] = { ...newResponses[order - 1], altText: null };
       } else {
         setHasBegunEditing(true);
         newResponses[order - 1] = { ...newResponses[order - 1], altText: text };
       }
 
-      return newResponses;
-    };
-    setResponses(update);
-  };
-
-  const clearPhoto = () => {
-    setPhoto(null);
-    const update = (p) => {
-      const newResponses = [...p];
-      newResponses[order - 1] = null;
       return newResponses;
     };
     setResponses(update);
@@ -555,6 +557,7 @@ const Card = (
                 setEditingImageDescription={setEditingImageDescription}
                 hasBegunEditing={hasBegunEditing}
                 setHasBegunEditing={setHasBegunEditing}
+                closeInputs={closeInputs}
               />
             )}
           </AnimatePresence>

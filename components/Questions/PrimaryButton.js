@@ -9,6 +9,7 @@ import {
   Switch,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import BCAI from "../../assets/constants/BCAIStyles";
 import NavBarSecondary from "../../components/NavBarSecondary";
@@ -36,6 +37,7 @@ const PrimaryButton = ({
   animate,
   exit,
   transition,
+  isLoading,
 }) => {
   return (
     <MotiTouchableOpacity
@@ -47,7 +49,7 @@ const PrimaryButton = ({
       style={{ ...styles.primaryButton, ...style, backgroundColor: color }}
     >
       <Text style={BCAI.t.body}>{label} </Text>
-      {icon}
+      {!isLoading ? icon : <ActivityIndicator color={BCAI.c.primary.Black} />}
     </MotiTouchableOpacity>
   );
 };

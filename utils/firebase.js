@@ -7,6 +7,7 @@ import "firebase/database";
 import "firebase/firestore";
 //import "firebase/functions";
 import "firebase/storage";
+import * as FileSystem from "expo-file-system";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -29,39 +30,90 @@ const pushDonation = async (key, donation) => {
 	const needsToBeUploaded =
 		donation.type === "image" || donation.type === "voice";
 
-	if (needsToBeUploaded) {
-		const ref = firebase
-			.storage()
-			.ref(`${donation.type}/${new Date().getTime()}`);
-		await ref.put(blob);
-		donation.response;
+	const uploadDonation = async (donation, questionKey) => {
 		const snapshot = await firebase
 			.database()
 			.ref("/" + key)
 			.push({
 				donation,
 			});
-		const { key } = snapshot;
-	} else {
-		const snapshot = await firebase
-			.database()
-			.ref("/" + key)
-			.push({
-				donation,
-			});
-		const { key } = snapshot;
+		const { key: snapshotKey } = snapshot;
 
 		const donations = await AsyncStorage.getItem("donations");
 		if (donations !== null) {
 			const donationArr = JSON.parse(donations);
+
 			await AsyncStorage.setItem(
 				"donations",
-				JSON.stringify([key, ...donationArr])
+				JSON.stringify([{ questionKey, snapshotKey }, ...donationArr])
 			);
 		} else {
-			await AsyncStorage.setItem("donations", JSON.stringify([key]));
+			await AsyncStorage.setItem(
+				"donations",
+				JSON.stringify([{ questionKey, snapshotKey }])
+			);
 		}
+	};
+
+	if (needsToBeUploaded) {
+		console.log("----image donation-----");
+		console.log(donation);
+		console.log("----image donation-----");
+		const ref = firebase
+			.storage()
+			.ref(`${donation.type}/${new Date().getTime()}`);
+		// const file = await FileSystem.readAsStringAsync(donation.response.uri, {
+		// 	encoding: FileSystem.EncodingType.Base64,
+		// });
+		const localFile =
+			donation.type === "image"
+				? donation.response.uri
+				: donation.response;
+
+		const blob = await new Promise((resolve, reject) => {
+			const xhr = new XMLHttpRequest();
+			xhr.onload = function () {
+				resolve(xhr.response);
+			};
+			xhr.onerror = function (e) {
+				console.log(e);
+				reject(new TypeError("Network request failed"));
+			};
+			xhr.responseType = "blob";
+			xhr.open("GET", localFile, true);
+			xhr.send(null);
+		});
+		console.log("----file-----");
+		console.log(blob);
+		console.log("----file-----");
+		const snapshot = await ref.put(blob);
+
+		// We're done with the blob, close and release it
+		blob.close();
+		const remoteURL = await snapshot.ref.getDownloadURL();
+		// console.log("----image download link-----");
+		// console.log(remoteURL);
+		// console.log("----image download link-----");
+
+		await uploadDonation(
+			{
+				type: donation.type,
+				file: remoteURL,
+				altText: donation.altText,
+			},
+			key
+		);
+	} else {
+		await uploadDonation(donation, key);
 	}
+};
+
+const deleteFromFirebase = async (questionKey, snapshotKey) => {
+	let donationRef = firebase
+		.database()
+		.ref("/" + questionKey + "/" + snapshotKey);
+
+	await donationRef.remove();
 };
 
 const isDeckPublished = async () => {
@@ -96,4 +148,4 @@ const getActiveDeck = async () => {
 	return activeDeck.data();
 };
 
-export { pushDonation, getActiveDeck, isDeckPublished };
+export { pushDonation, getActiveDeck, isDeckPublished, deleteFromFirebase };

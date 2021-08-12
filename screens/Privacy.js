@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,13 +8,21 @@ import {
   Image,
   Switch,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import BCAI from "../assets/constants/BCAIStyles";
 import NavBarSecondary from "../components/NavBarSecondary";
 import NavMenu from "../components/NavMenu";
 import ArrowButton from "../components/ArrowButton";
+import { deleteFromFirebase } from "../utils/firebase";
+import { resetCardsRespondedTo, resetDonations } from "../utils/localStorage";
 
 function SettingsScreen({ navigation }) {
+  const [userDonations, setUserDonations] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const menuItems = [
     {
       label: "What is this for?",
@@ -29,6 +37,43 @@ function SettingsScreen({ navigation }) {
       navigateTo: "Settings",
     },
   ];
+
+  useEffect(() => {
+    const getDonationsOnLoad = async () => {
+      const donations = await getDonations();
+      setUserDonations(donations);
+    };
+    getDonationsOnLoad();
+  }, [userDonations]);
+
+  const getDonations = async () => {
+    return new Promise(async (resolve, reject) => {
+      const donations = await AsyncStorage.getItem("donations");
+      if (donations !== null) {
+        const donationArr = JSON.parse(donations);
+        resolve(donationArr);
+      } else {
+        resolve(null);
+      }
+    });
+  };
+  useEffect(() => {}, []);
+
+  const deleteDonations = async () => {
+    setIsDeleting(true);
+    const donations = await getDonations();
+    await Promise.all(
+      donations.map(
+        async (d) => await deleteFromFirebase(d.questionKey, d.snapshotKey)
+      )
+    );
+    await resetDonations();
+    setUserDonations(null);
+    setIsDeleting(false);
+
+    console.log(donations);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -79,13 +124,35 @@ function SettingsScreen({ navigation }) {
           >
             My Data
           </Text>
-          <ArrowButton
-            style={{ marginVertical: 8 * BCAI.screenRatio, marginBottom: 30 }}
-            theme="light"
-            direction="right"
-            label="Go to Database on Github"
-            onPress={() => Linking.openURL("https://github.com/")}
-          />
+          {userDonations !== null && (
+            <>
+              {isDeleting ? (
+                <View
+                  style={{
+                    marginTop: 12 * BCAI.screenRatio,
+                    marginVertical: 8 * BCAI.screenRatio,
+                    marginBottom: 30,
+                    flexDirection: "row",
+                    ustifyContent: "flex-start",
+                  }}
+                >
+                  <ActivityIndicator />
+                </View>
+              ) : (
+                <ArrowButton
+                  style={{
+                    marginTop: 12 * BCAI.screenRatio,
+                    marginVertical: 8 * BCAI.screenRatio,
+                    marginBottom: 30,
+                  }}
+                  theme="light"
+                  direction="right"
+                  label="Request my data to be deleted"
+                  onPress={deleteDonations}
+                />
+              )}
+            </>
+          )}
           <Text
             style={{
               ...BCAI.t.body,

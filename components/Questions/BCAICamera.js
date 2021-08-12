@@ -26,9 +26,11 @@ const BCAICamera = ({
   setResponses,
   hasPermission,
   setHasPermission,
+  pictureTaken,
+  setPictureTaken,
 }) => {
   if (!hasPermission) return null;
-  const [pictureTaken, setPictureTaken] = useState(false);
+
   const cameraRef = useRef();
 
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -70,7 +72,7 @@ const BCAICamera = ({
         newResponses[currentCard] = {
           type: "image",
           response: currentPhoto,
-          altText: "",
+          altText: null,
         };
         return newResponses;
       };
@@ -150,7 +152,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
     marginBottom: 80 * BCAI.screenRatio,
-    zIndex: 1000,
+    zIndex: 100000,
+    elevation: 100000,
   },
   takePicture: {
     borderRadius: 200,
