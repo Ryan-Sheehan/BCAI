@@ -35,7 +35,9 @@ const Footer = () => {
             maxWidth: 100,
           }}
         >
-          Stephanie Dinkinks Studio
+          Stephanie{"\n"}
+          Dinkins{"\n"}
+          Studio
         </Text>
       </View>
       <View
@@ -56,10 +58,10 @@ const Footer = () => {
           style={{
             ...BCAI.t.footerName,
             color: BCAI.c.primary.White,
-            maxWidth: 160,
+            maxWidth: 140,
           }}
         >
-          Mozilla Foundation 2020Visions Knight Foundation{" "}
+          Mozilla Foundation Visions 2030 Knight Foundation{" "}
         </Text>
       </View>
     </View>

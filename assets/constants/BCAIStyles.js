@@ -20,7 +20,14 @@ const BCAI = {
     largeTitle: {
       fontFamily: "Inktrap-Bold",
       fontSize: 36 * screenRatio,
-      lineHeight: 44 * screenRatio,
+      lineHeight: 38 * screenRatio,
+      paddingTop: 2,
+    },
+    largeTitleRegular: {
+      fontFamily: "Inktrap-Regular",
+      fontSize: 36 * screenRatio,
+      lineHeight: 38 * screenRatio,
+      paddingTop: 2,
     },
     body: {
       fontFamily: "Inktrap-Regular",
@@ -31,6 +38,10 @@ const BCAI = {
       fontSize: 18 * screenRatio,
     },
     headline: {
+      fontFamily: "Inktrap-Bold",
+      fontSize: 22 * screenRatio,
+    },
+    headlineRegular: {
       fontFamily: "Inktrap-Regular",
       fontSize: 22 * screenRatio,
     },
@@ -61,7 +72,7 @@ const BCAI = {
   },
   c: {
     primary: {
-      Black: "#131313",
+      Black: "#000000",
       White: "#FFFFFF",
       Yellow: "#FFDF6B",
       Pink: "#FEBFFF",

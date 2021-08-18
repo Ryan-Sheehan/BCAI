@@ -24,14 +24,17 @@ import Footer from "../components/Homescreen/Footer";
 import { Person, Settings, Smiley, Database } from "../icons/BCAIIcons";
 import BCAI from "../assets/constants/BCAIStyles";
 
-const NavBarPrimary = ({ onLogoPress, onHamburgerPress }) => {
+const NavBarPrimary = ({ onLogoPress, hamburgerOpen, onHamburgerPress }) => {
   const header = require("../assets/media/headerLight.png");
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={onLogoPress}>
         <Image style={styles.headerLogo} source={header} />
       </TouchableOpacity>
-      <Hamburger onHamburgerPress={onHamburgerPress} />
+      <Hamburger
+        hamburgerOpen={hamburgerOpen}
+        onHamburgerPress={onHamburgerPress}
+      />
     </View>
   );
 };

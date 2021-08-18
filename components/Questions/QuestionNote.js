@@ -40,7 +40,9 @@ const styles = StyleSheet.create({
 	note: {
 		...BCAI.t.body,
 		lineHeight: 22 * BCAI.screenRatio,
-		maxWidth: 300 * BCAI.screenRatio,
+		alignSelf: "stretch",
+
 		marginBottom: 30 * BCAI.screenRatio,
+		paddingHorizontal: 10 * BCAI.screenRatio,
 	},
 });

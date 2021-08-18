@@ -94,13 +94,44 @@ const BCAIVoiceMemo = ({
           <View style={styles.cameraContainer}>
             <View style={styles.takePictureContainer}>
               <View style={styles.voiceMemoHeader}>
-                <Text style={BCAI.t.body}>
-                  {formatMilliseconds(
-                    recordingTimeElapsed * 1000,
-                    " min",
-                    " sec"
-                  )}
-                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={BCAI.t.body}>
+                    {formatMilliseconds(
+                      recordingTimeElapsed * 1000,
+                      " min",
+                      " sec"
+                    )}
+                    {"  "}
+                  </Text>
+                  <AnimatePresence>
+                    {recording && (
+                      <View
+                        key="dot-dot"
+                        from={{
+                          opacity: 0,
+                        }}
+                        animate={{
+                          opacity: 1,
+                        }}
+                        exit={{
+                          opacity: 0,
+                        }}
+                        transition={{
+                          loop: true,
+                          type: "timing",
+                          duration: 1200,
+                          delay: 100,
+                        }}
+                        style={{
+                          backgroundColor: BCAI.c.primary.White,
+                          height: 10,
+                          width: 10,
+                          borderRadius: 100,
+                        }}
+                      />
+                    )}
+                  </AnimatePresence>
+                </View>
                 <TouchableOpacity
                   disabled={recording}
                   style={{ opacity: recording ? 0.4 : 1 }}

@@ -22,12 +22,17 @@ import NavBarSecondary from "../../components/NavBarSecondary";
 import NavMenu from "../../components/NavMenu";
 import ArrowButton from "../../components/ArrowButton";
 import formatMilliseconds from "../../utils/formatMilliseconds";
+import { handleNotch } from "../../utils/handleNotch";
+
 import hexToRgb from "../../utils/hexToRgb";
 
 import {
   CardOne,
   CardTwo,
   CardThree,
+  SmallCardOne,
+  SmallCardTwo,
+  SmallCardThree,
   MicIcon,
   KeyboardIcon,
   SkipIcon,
@@ -59,17 +64,34 @@ const MotiTextInput = motify(TextInput)();
 
 const MotiImage = motify(Image)();
 
-const FullHeightSvg = ({ children, cardPos, completed, backgroundColor }) => (
+const FullHeightSvg = ({
+  children,
+  ratio,
+  cardPos,
+  completed,
+  backgroundColor,
+}) => (
   <View
-    animate={{ translateX: completed ? -SCREEN_WIDTH : 0 }}
+    animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
     style={{
       ...styles.fullHeightSVG,
       zIndex: cardPos,
       elevation: cardPos,
-      backgroundColor,
     }}
   >
-    <Svg height="100%" width="100%" viewBox="0 0 375 812">
+    <Svg
+      style={{
+        transform: [
+          {
+            scale: ratio < 0.56 ? 1 : 1.25,
+          },
+          { translateY: ratio < 0.56 ? 0 : 45 * BCAI.screenRatio },
+        ],
+      }}
+      height="100%"
+      width="100%"
+      viewBox="0 0 375 812"
+    >
       {children}
     </Svg>
   </View>
@@ -254,11 +276,12 @@ const CardTextInput = forwardRef(
       response,
       order,
       secondaryColor,
+      closeInputs,
     },
     ref
   ) => {
     if (response !== null && response.type === "voice") return null;
-    console.log(secondaryColor);
+
     const rgbSecondary = hexToRgb(secondaryColor);
 
     const rgbaSecondaryTransparent = `rgba(${rgbSecondary.r},${rgbSecondary.g},${rgbSecondary.b},0)`;
@@ -275,6 +298,7 @@ const CardTextInput = forwardRef(
             ref={ref}
             focus={inputActive}
             onChangeText={handleTextChange}
+            onBlur={closeInputs}
             multiline={true}
             scrollEnabled={false}
             pointerEvents="none"
@@ -498,10 +522,20 @@ const Card = (
 
   const showQuestion = active || isSettingStack;
 
+  const roundToHundreth = (num) => {
+    return Math.round(100 * num) / 100;
+  };
+
+  const ratio = roundToHundreth(width / height);
+
+  console.log("------ratio------");
+  console.log(ratio);
+  console.log("------ratio------");
+
   return (
     <>
       <View
-        animate={{ translateX: completed ? -SCREEN_WIDTH : 0 }}
+        animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
         style={{
           ...styles.container,
           zIndex: cardPosScaled + 1,
@@ -534,6 +568,7 @@ const Card = (
                 response={response}
                 order={order}
                 secondaryColor={secondaryColor}
+                closeInputs={closeInputs}
               />
 
               <CardVoiceMemo
@@ -568,10 +603,21 @@ const Card = (
         cardPos={cardPosScaled}
         completed={completed}
         backgroundColor={primaryColor}
+        ratio={ratio}
       >
-        {order === 1 && <CardThree color={primaryColor} />}
-        {order === 2 && <CardTwo color={primaryColor} />}
-        {order === 3 && <CardOne color={primaryColor} />}
+        {true ? (
+          <>
+            {order === 1 && <CardThree color={primaryColor} />}
+            {order === 2 && <CardTwo color={primaryColor} />}
+            {order === 3 && <CardOne color={primaryColor} />}
+          </>
+        ) : (
+          <>
+            {order === 1 && <SmallCardThree color={primaryColor} />}
+            {order === 2 && <SmallCardTwo color={primaryColor} />}
+            {order === 3 && <SmallCardOne color={primaryColor} />}
+          </>
+        )}
       </FullHeightSvg>
     </>
   );
@@ -580,14 +626,18 @@ const forwardRefCard = forwardRef(Card);
 const memoForwardRefCard = React.memo(forwardRefCard);
 export default forwardRefCard;
 
-const styles = StyleSheet.create({
+const styles = handleNotch({
   container: {
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    top: 50 * BCAI.screenRatio,
+    top: {
+      notched: 50 * BCAI.screenRatio,
+      notchless: 20 * BCAI.screenRatio,
+    },
+
     alignItems: "center",
   },
   containerInner: {
@@ -603,7 +653,7 @@ const styles = StyleSheet.create({
     top: 0,
 
     borderRadius: 20,
-    overflow: "hidden",
+    overflow: "visible",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

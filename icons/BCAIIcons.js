@@ -329,6 +329,66 @@ function CardOne(props) {
   );
 }
 
+function SmallCardOne(props) {
+  return (
+    <Svg
+      width={360}
+      height={640}
+      viewBox="0 0 360 640"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M360 0H0v640h360V0zm-33.5 100.266c5.799 0 10.5-4.701 10.5-10.5s-4.701-10.5-10.5-10.5-10.5 4.701-10.5 10.5 4.701 10.5 10.5 10.5z"
+        fill={props.color}
+      />
+    </Svg>
+  );
+}
+
+function SmallCardTwo(props) {
+  return (
+    <Svg
+      width={360}
+      height={640}
+      viewBox="0 0 360 640"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0h360v640H0V0zm337 89.766c0 5.799-4.701 10.5-10.5 10.5s-10.5-4.701-10.5-10.5 4.701-10.5 10.5-10.5 10.5 4.701 10.5 10.5zm-38.5 10.5c5.799 0 10.5-4.701 10.5-10.5s-4.701-10.5-10.5-10.5-10.5 4.701-10.5 10.5 4.701 10.5 10.5 10.5z"
+        fill={props.color}
+      />
+    </Svg>
+  );
+}
+
+function SmallCardThree(props) {
+  return (
+    <Svg
+      width={360}
+      height={640}
+      viewBox="0 0 360 640"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M360 0H0v640h360V0zm-33.5 100.266c5.799 0 10.5-4.701 10.5-10.5s-4.701-10.5-10.5-10.5-10.5 4.701-10.5 10.5 4.701 10.5 10.5 10.5zm-17.5-10.5c0 5.799-4.701 10.5-10.5 10.5s-10.5-4.701-10.5-10.5 4.701-10.5 10.5-10.5 10.5 4.701 10.5 10.5zm-38.5 10.5c5.799 0 10.5-4.701 10.5-10.5s-4.701-10.5-10.5-10.5-10.5 4.701-10.5 10.5 4.701 10.5 10.5 10.5z"
+        fill={props.color}
+      />
+    </Svg>
+  );
+}
+
 function MicIcon(props) {
   return (
     <Svg
@@ -596,6 +656,42 @@ function PauseIcon(props) {
   );
 }
 
+function Hamburger(props) {
+  return (
+    <Svg
+      width={29}
+      height={29}
+      viewBox="0 0 29 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M3.625 21.75h21.75v-2.417H3.625v2.417zm0-6.042h21.75v-2.416H3.625v2.416zm0-8.458v2.417h21.75V7.25H3.625z"
+        fill="#fff"
+      />
+    </Svg>
+  );
+}
+
+function Close(props) {
+  return (
+    <Svg
+      width={29}
+      height={29}
+      viewBox="0 0 29 29"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M22.958 7.745l-1.703-1.703-6.755 6.754-6.755-6.754-1.703 1.703 6.754 6.755-6.754 6.755 1.703 1.703 6.755-6.754 6.755 6.754 1.703-1.703-6.754-6.755 6.754-6.755z"
+        fill="#fff"
+      />
+    </Svg>
+  );
+}
+
 export {
   ArrowLeft,
   ArrowRight,
@@ -610,6 +706,9 @@ export {
   CardOne,
   CardTwo,
   CardThree,
+  SmallCardOne,
+  SmallCardTwo,
+  SmallCardThree,
   MicIcon,
   BigMicIcon,
   KeyboardIcon,
@@ -624,4 +723,6 @@ export {
   SineIcon,
   PlayIcon,
   PauseIcon,
+  Hamburger,
+  Close,
 };

@@ -243,7 +243,7 @@ const Questions = ({ navigation, route }) => {
     };
 
     //resetDonations();
-    //resetCardsRespondedTo();
+    //resetCardsRespondedTo(cardGroups);
     //resetAreModalsCleared();
     //getCardsRespondedTo();
     getAreModalsCleared();
@@ -496,6 +496,7 @@ const Questions = ({ navigation, route }) => {
   const handleToastCleared = async () => {
     await storeData(TOAST, "answered");
     setToastCleared(true);
+    await handleDonate(toastJustCleared);
   };
 
   const clearPhoto = () => {
@@ -510,29 +511,31 @@ const Questions = ({ navigation, route }) => {
     setResponses(update);
   };
 
-  const handleDonate = async () => {
-    setIsDonating(true);
+  const handleDonate = async (toastJustCleared) => {
     const hasAlreadyDonated = responses.filter((r) => r !== null).length > 1;
-    if (!hasAlreadyDonated && !toastCleared) {
+    if (!hasAlreadyDonated && !toastCleared && !toastJustCleared) {
       if (keyboardActive) {
         closeKeyboard();
       }
       setToastOpen(true);
       return;
     }
+
+    setIsDonating(true);
     setEditingImageDescription(false);
     closeInputs();
 
     const card = allStacks[currentStack][currentCard];
+    const response = responses[currentCard];
 
-    await storeData(card._key, "answered");
-    await pushDonation(card._key, responses[currentCard]);
     setPictureTaken(false);
     setPhoto(null);
     setRecording();
     setIsDonating(false);
 
     await goToNextCard();
+    await storeData(card._key, "answered");
+    await pushDonation(card._key, response);
   };
 
   const requestPermissions = async () => {
@@ -542,6 +545,23 @@ const Questions = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* exit card button clean up later */}
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Home")}
+        disabled={currentCard >= 3}
+        style={{
+          display: currentCard >= 3 ? "none" : "flex",
+          position: "absolute",
+          height: 40,
+          width: 90,
+          right: 20,
+          top: 70,
+
+          zIndex: 10000000,
+          elevation: 1000000,
+        }}
+      />
+      {/* exit card button clean up later */}
       {allStacks[currentStack].map((c, i) => {
         return (
           <Card

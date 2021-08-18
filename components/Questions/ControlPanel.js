@@ -130,13 +130,14 @@ const ActionBar = ({
 }) => {
   return (
     <View style={{ ...styles.actionBar }}>
-      <SecondaryButton
+      {/*<SecondaryButton
         label={"Help"}
         visible={true}
         icon={<HelpIcon />}
         onPress={onHelp}
         disabled={recording}
-      />
+      />*/}
+      <View style={{ width: 75 * BCAI.screenRatio }} />
 
       <TextInputMode
         color={color}
@@ -186,7 +187,7 @@ const ActionBar = ({
             transition={{ duration: 600 }}
           >
             <SecondaryButton
-              label={"Skip"}
+              label={"Next"}
               visible={response === null}
               icon={<SkipIcon />}
               onPress={onSkip}
@@ -227,6 +228,7 @@ const InputInfo = ({ color, inputActive, response, inputInfo }) => {
                 ...BCAI.t.bodyEmphasis,
                 textAlign: "center",
                 lineHeight: 22,
+                maxWidth: 200,
               }}
             >
               {inputInfo}

@@ -78,7 +78,7 @@ const BigQuestion = ({ text, active, showQuestion }) => {
               },
               duration: 260,
             }}
-            style={styles.bigQuestion}
+            style={styles.smallQuestion}
           >
             <Text style={BCAI.t.bodyEmphasis}>{text}</Text>
           </View>
@@ -95,8 +95,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: BCAI.c.primary.Black,
-
-    marginBottom: 10 * BCAI.screenRatio,
+    marginBottom: 20 * BCAI.screenRatio,
+    paddingTop: 20 * BCAI.screenRatio,
+    paddingBottom: 10 * BCAI.screenRatio,
+  },
+  smallQuestion: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: BCAI.c.primary.Black,
+    marginBottom: 20 * BCAI.screenRatio,
     paddingTop: 10 * BCAI.screenRatio,
     paddingBottom: 10 * BCAI.screenRatio,
   },

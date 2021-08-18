@@ -1,5 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const TOAST = "data-anonymity-info-toast";
+const TEXT_MODAL = "text-modal-seen";
+const IMAGE_MODAL = "image-modal-seen";
 const resetAreModalsCleared = async () => {
 	await AsyncStorage.removeItem(TOAST);
 

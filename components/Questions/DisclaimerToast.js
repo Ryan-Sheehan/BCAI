@@ -11,6 +11,8 @@ import {
   KeyboardAvoidingView,
   Dimensions,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import { View, AnimatePresence } from "moti";
 import { Camera } from "expo-camera";
 import ArrowButton from "../../components/ArrowButton";
@@ -18,7 +20,16 @@ import BCAI from "../../assets/constants/BCAIStyles";
 
 const { height, width } = Dimensions.get("window");
 
+const ReadMoreButton = () => {
+  return (
+    <View>
+      <Text>Read More</Text>
+    </View>
+  );
+};
+
 const DisclaimerToast = ({ toastOpen, setToastOpen, setToastCleared }) => {
+  const navigation = useNavigation();
   return (
     <View
       animate={{ translateY: toastOpen ? 0 : height + 200 }}
@@ -45,11 +56,11 @@ const DisclaimerToast = ({ toastOpen, setToastOpen, setToastCleared }) => {
           style={{
             ...BCAI.t.toastHeader,
             color: BCAI.c.primary.White,
-            marginBottom: 30,
+            marginBottom: 15,
             lineHeight: 32,
           }}
         >
-          Hold up! Your privacy is important
+          Hold up! Y(our) privacy is important!
         </Text>
         <Text
           style={{
@@ -60,15 +71,24 @@ const DisclaimerToast = ({ toastOpen, setToastOpen, setToastCleared }) => {
           }}
         >
           We hope you’ll contribute to Binary Calculations Are Inadequate, but
-          be mindful. Think twice before sharing sensitive information you
-          usually would not share with others. Your privacy is vital to us, so
-          your answers will be anonymized. Inappropriate content will be
-          removed. On the upside, data donated will be used to create less
-          biassed, full-spectrum datasets that inform algorithmic systems more
-          deeply, broadly, and carefully. These data sets are intended to
-          support but will eventually be made available to be used by any
-          project. We hope you’ll donate so we can craft our digital future
-          together.
+          remember any information you offer will become public data. It will be
+          anonymous, but available for anyone to use. Think twice before
+          contributing information you normally wouldn't share with strangers.
+          Inappropriate content will be removed.{" "}
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PrivacyPolicyWebView")}
+          >
+            <Text
+              style={{
+                ...BCAI.t.bodyEmphasis,
+                color: BCAI.c.primary.White,
+                textDecorationLine: "underline",
+                lineHeight: 24,
+              }}
+            >
+              Learn More
+            </Text>
+          </TouchableOpacity>
         </Text>
         <View
           style={{

@@ -2,8 +2,9 @@
 	"expo": {
 		"name": "BCAI",
 		"slug": "BCAI",
-		//"owner": "bcai",
-		"owner": "ryanwsheehan",
+		"owner": "bcai",
+		"orientation": "portrait",
+		//"owner": "ryanwsheehan",
 		"version": "1.0.0",
 		"backgroundColor": "#131313",
 		"assetBundlePatterns": ["**/*"],

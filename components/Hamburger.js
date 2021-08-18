@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-import { ArrowRight, ArrowLeft, BackArrow } from "../icons/BCAIIcons";
+import { Hamburger as HamburgerIcon, Close } from "../icons/BCAIIcons";
 import BCAI from "../assets/constants/BCAIStyles";
 
-function Hamburger({ navigation, onHamburgerPress }) {
+function Hamburger({ navigation, hamburgerOpen, onHamburgerPress }) {
 	return (
 		<TouchableOpacity onPress={onHamburgerPress}>
-			<View style={styles.hamburger} />
+			{hamburgerOpen ? <Close /> : <HamburgerIcon />}
 		</TouchableOpacity>
 	);
 }

@@ -19,10 +19,12 @@ import SettingsScreen from "./screens/Settings";
 import DatabaseScreen from "./screens/Database";
 import PrivacyScreen from "./screens/Privacy";
 import QuestionsScreen from "./screens/Questions";
+import PrivacyPolicyWebView from "./screens/PrivacyPolicyWebView";
 
 import AboutScreen from "./screens/About";
 
 import { NavigationContainer } from "@react-navigation/native";
+
 import {
   createStackNavigator,
   CardStyleInterpolators,
@@ -97,6 +99,7 @@ export default function App() {
       />
     );
   }
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -124,6 +127,10 @@ export default function App() {
         <Stack.Screen name="Privacy" component={PrivacyScreen} />
         <Stack.Screen name="Database" component={DatabaseScreen} />
         <Stack.Screen name="About" component={AboutScreen} />
+        <Stack.Screen
+          name="PrivacyPolicyWebView"
+          component={PrivacyPolicyWebView}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

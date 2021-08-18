@@ -35,37 +35,14 @@ function NavMenu({ navigation, menuItems }) {
     };
 
     return (
-      <TouchableOpacity
-        onPress={handlePress}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingVertical: 16,
-          borderTopWidth: 1,
-          borderColor: BCAI.c.primary.White,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            height: 32,
-          }}
-        >
+      <TouchableOpacity onPress={handlePress} style={styles.menuButton}>
+        <View style={styles.menuButtonInner}>
           {item?.icon && (
-            <View style={{ marginRight: 8, paddingTop: 4 }}>
+            <View style={styles.icon}>
               <Text>{item.icon}</Text>
             </View>
           )}
-          <Text
-            style={{
-              ...BCAI.t.body,
-              color: BCAI.c.primary.White,
-            }}
-          >
-            {label}
-          </Text>
+          <Text style={styles.label}>{label}</Text>
         </View>
         <Chevron />
       </TouchableOpacity>
@@ -73,10 +50,7 @@ function NavMenu({ navigation, menuItems }) {
   };
   return (
     <FlatList
-      style={{
-        alignSelf: "stretch",
-        marginTop: 16,
-      }}
+      style={styles.menu}
       contentContainerStyle={{}}
       scrollEnabled={false}
       showsVerticalScrollIndicator={false}
@@ -95,5 +69,27 @@ const styles = StyleSheet.create({
     backgroundColor: BCAI.c.primary.Black,
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  menu: {
+    alignSelf: "stretch",
+    marginTop: 16,
+  },
+  label: {
+    ...BCAI.t.body,
+    color: BCAI.c.primary.White,
+  },
+  icon: { marginRight: 8, paddingTop: 4 },
+  menuButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 16,
+    borderTopWidth: 1,
+    borderColor: BCAI.c.primary.White,
+  },
+  menuButtonInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 32,
   },
 });
