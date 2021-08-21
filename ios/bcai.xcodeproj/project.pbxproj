@@ -160,7 +160,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = JSS8RYKFBX;
+						DevelopmentTeam = TV25Z3G7JL;
 						LastSwiftMigration = 1120;
 					};
 				};
@@ -308,7 +308,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bcai/bcai.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JSS8RYKFBX;
+				DEVELOPMENT_TEAM = TV25Z3G7JL;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -322,7 +322,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryansheehan.bcai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephaniedinkins.bcai;
 				PRODUCT_NAME = bcai;
 				SWIFT_OBJC_BRIDGING_HEADER = "bcai/bcai-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -340,7 +340,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bcai/bcai.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = JSS8RYKFBX;
+				DEVELOPMENT_TEAM = TV25Z3G7JL;
 				INFOPLIST_FILE = bcai/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -349,7 +349,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryansheehan.bcai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephaniedinkins.bcai;
 				PRODUCT_NAME = bcai;
 				SWIFT_OBJC_BRIDGING_HEADER = "bcai/bcai-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
