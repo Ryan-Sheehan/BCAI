@@ -145,7 +145,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.ryansheehan.bcai'
+        applicationId 'com.stephaniedinkins.bcai'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
