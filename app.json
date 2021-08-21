@@ -1,29 +1,29 @@
 {
-	"expo": {
-		"name": "BCAI",
-		"slug": "BCAI",
-		"owner": "bcai",
-		"orientation": "portrait",
-		//"owner": "ryanwsheehan",
-		"version": "1.0.0",
-		"backgroundColor": "#131313",
-		"assetBundlePatterns": ["**/*"],
-		"splash": {
-			"image": "./assets/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#FF6636"
-		},
-		"icon": "./assets/icon.png",
-
-		"ios": {
-			//"bundleIdentifier": "com.stephaniedinkins.bcai",
-			"buildNumber": "1.0.0"
-		},
-		"android": {
-			"package": "com.stephaniedinkins.bcai",
-			"versionCode": 1,
-			"softwareKeyboardLayoutMode": "pan"
-		}
-	},
-	"name": "BCAI"
+  "expo": {
+    "name": "BCAI",
+    "slug": "BCAI",
+    "owner": "bcai",
+    "orientation": "portrait",
+    "version": "1.0.0",
+    "backgroundColor": "#131313",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FF6636"
+    },
+    "icon": "./assets/icon.png",
+    "ios": {
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.stephaniedinkins.bcai"
+    },
+    "android": {
+      "package": "com.stephaniedinkins.bcai",
+      "versionCode": 1,
+      "softwareKeyboardLayoutMode": "pan"
+    }
+  },
+  "name": "BCAI"
 }
