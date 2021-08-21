@@ -16,7 +16,7 @@
 		"icon": "./assets/icon.png",
 
 		"ios": {
-			"bundleIdentifier": "bcai",
+			"bundleIdentifier": "com.stephaniedinkins.bcai",
 			"buildNumber": "1.0.0"
 		},
 		"android": {
