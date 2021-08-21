@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "856912895280",
+    "firebase_url": "https://binarycalculations-default-rtdb.firebaseio.com",
+    "project_id": "binarycalculations",
+    "storage_bucket": "binarycalculations.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856912895280:android:9fcb8fff85e8d4161fbcf5",
+        "android_client_info": {
+          "package_name": "com.stephaniedinkins.bcai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856912895280-7sqahc5i78hbajvogkl2k3rrg8n15lrc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9EQYk1nNHze0j1ic-LrndSD9AfeZVDMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856912895280-7sqahc5i78hbajvogkl2k3rrg8n15lrc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
