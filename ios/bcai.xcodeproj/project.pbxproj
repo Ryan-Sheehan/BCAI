@@ -322,7 +322,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stephaniedinkins.bcai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephaniedinkins.binarycalculationsareinadequate;
 				PRODUCT_NAME = bcai;
 				SWIFT_OBJC_BRIDGING_HEADER = "bcai/bcai-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -349,7 +349,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stephaniedinkins.bcai;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stephaniedinkins.binarycalculationsareinadequate;
 				PRODUCT_NAME = bcai;
 				SWIFT_OBJC_BRIDGING_HEADER = "bcai/bcai-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
