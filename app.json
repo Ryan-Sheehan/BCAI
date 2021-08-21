@@ -15,7 +15,7 @@
 		"icon": "./assets/icon.png",
 		"ios": {
 			"buildNumber": "1.0.0",
-			"bundleIdentifier": "com.stephaniedinkins.binarycalculations"
+			"bundleIdentifier": "com.stephaniedinkins.binarycalculationsareinadequate"
 		},
 		"android": {
 			"package": "com.stephaniedinkins.bcai",
