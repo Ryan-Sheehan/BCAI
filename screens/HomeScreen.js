@@ -35,7 +35,6 @@ const { width } = Dimensions.get("window");
 const MotiImage = motify(Image)();
 
 function HomeScreenMain({ navigation, handle, activeDeck }) {
-  const animation = require("../assets/media/home.gif");
   const handleGoToAbout = () => {
     navigation.navigate("About");
   };
@@ -58,38 +57,42 @@ function HomeScreenMain({ navigation, handle, activeDeck }) {
           onPress={handleGoToAbout}
         />
       </View>
-      <View
-        from={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          type: "timing",
-          duration: 1000,
-        }}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          left: 0,
-          top: 0,
-          zIndex: -1,
-        }}
-      >
-        <Image
-          style={{
-            width,
-            position: "absolute",
-            bottom: -35 * BCAI.screenRatio,
-            right: 0,
-            left: 0,
-            zIndex: -1,
-          }}
-          source={animation}
-        />
-      </View>
     </>
   );
 }
+const Animation = ({ source, visible }) => {
+  if (!visible) return null;
+  return (
+    <View
+      from={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        type: "timing",
+        duration: 1000,
+      }}
+      style={{
+        position: "absolute",
+        bottom: -20,
+        right: 0,
+        left: 0,
+
+        justifyContent: "center",
+        alignItems: "flex-end",
+
+        zIndex: -1,
+      }}
+    >
+      <Image
+        style={{
+          width,
+          zIndex: -1,
+        }}
+        source={source}
+      />
+    </View>
+  );
+};
 
 function HomeScreen({ navigation, route }) {
   const hamburgerOpenInitial = route.params?.hamburgerOpenInitial;
@@ -201,6 +204,18 @@ function HomeScreen({ navigation, route }) {
       params: { activeDeck: deck, startingCard, startingStack },
     });
   };
+
+  const animation1 = require("../assets/media/home1.gif");
+  const animation2 = require("../assets/media/home2.gif");
+
+  const animation3 = require("../assets/media/home3.gif");
+  const animations = [animation1, animation2, animation3];
+  const [randomAnimation, setRandomAnimation] = useState();
+  useEffect(() => {
+    setRandomAnimation(
+      animations[Math.floor(Math.random() * animations.length)]
+    );
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       {/*<Image
@@ -220,7 +235,7 @@ function HomeScreen({ navigation, route }) {
         />
         <Text style={styles.info}>
           {hamburgerOpen
-            ? "A project to create and model data built on comprehensive representa- tions of our lives, beliefs, and cultures through intimate knowledge, love-based labeling, and prioritizing community support.  "
+            ? "A project to create and model data built on comprehensive representations of our lives, beliefs, and cultures through intimate knowledge, love-based labeling, and prioritizing community support.  "
             : "An app that asks how we can make the data-driven algorithms that increasingly control our daily lives more caring."}
         </Text>
         {!hamburgerOpen ? (
@@ -235,6 +250,7 @@ function HomeScreen({ navigation, route }) {
         {hamburgerOpen && <Footer />}
       </View>
 
+      <Animation source={randomAnimation} visible={!hamburgerOpen} />
       <StatusBar style="auto" />
     </SafeAreaView>
   );

@@ -23,6 +23,11 @@ const getStyle = (inputStyle) => {
         device = e;
       }
     });
+    // fixes android ratios
+    if (device === "other") {
+      device = "notchless";
+    }
+
     return device;
   };
   const styleTypes = Object.keys(inputStyle);

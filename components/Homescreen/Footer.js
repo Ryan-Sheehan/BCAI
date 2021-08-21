@@ -49,10 +49,10 @@ const Footer = () => {
           style={{
             ...BCAI.t.footerLabel,
             color: BCAI.c.primary.White,
-            maxWidth: 100,
+            maxWidth: 140,
           }}
         >
-          With:
+          With Support From:
         </Text>
         <Text
           style={{
@@ -61,7 +61,9 @@ const Footer = () => {
             maxWidth: 140,
           }}
         >
-          Mozilla Foundation Visions 2030 Knight Foundation{" "}
+          Mozilla Foundation {"\n"}
+          Visions 2030 {"\n"}
+          Knight Foundation{" "}
         </Text>
       </View>
     </View>

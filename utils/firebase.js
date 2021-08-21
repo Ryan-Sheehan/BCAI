@@ -99,7 +99,7 @@ const pushDonation = async (key, donation) => {
 			{
 				type: donation.type,
 				file: remoteURL,
-				altText: donation.altText,
+				altText: donation?.altText ? donation.altText : null,
 			},
 			key
 		);

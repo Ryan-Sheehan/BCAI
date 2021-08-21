@@ -107,7 +107,7 @@ function SettingsScreen({ navigation, route }) {
     console.log("hey");
     Alert.alert(
       "Confirm Reset",
-      "Resetting questions will not delete your donations. You will be able to submit new responses to any of the questions you have already seen. ",
+      "Reset to provide different answers to questions you've already seen. Note: resetting will not delete your previous answers. It will allow you to help even more by adding additional data.",
       [
         {
           text: "Cancel",
@@ -119,7 +119,13 @@ function SettingsScreen({ navigation, route }) {
     );
   };
 
-  const contactUs = () => Linking.openURL("mailto:dinkinsstudio@gmail.com");
+  const contactUs = () =>
+    Linking.openURL(
+      "mailto:hello@dinkins.studio?subject=Binary Calculations App:"
+    );
+
+  const animation = require("../assets/media/wheelchair.gif");
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ width: 323 * BCAI.screenRatio, flex: 1 }}>
@@ -143,6 +149,35 @@ function SettingsScreen({ navigation, route }) {
           onPress={resetQuestionsAlert}
         />
         <SettingsLineItemChevron label="Contact Us" onPress={contactUs} />
+      </View>
+      <View
+        from={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 500,
+          duration: 1200,
+        }}
+        style={{
+          position: "absolute",
+          bottom: 0,
+          right: 0,
+          left: 0,
+          top: 0,
+          zIndex: -1,
+        }}
+      >
+        <Image
+          style={{
+            position: "absolute",
+
+            bottom: 0,
+            left: 0,
+            right: 0,
+
+            width: 373 * BCAI.screenRatio,
+          }}
+          source={animation}
+        />
       </View>
     </SafeAreaView>
   );

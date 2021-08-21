@@ -45,8 +45,8 @@ const BaseCard = ({
   handlePress,
   noMoreStacks,
 }) => {
-  const animationMoreCards = require("../../assets/media/thankYou.gif");
-  const animationNoMoreCards = require("../../assets/media/stackEmpty.gif");
+  const animation = require("../../assets/media/thanks.gif");
+  //const animationNoMoreCards = require("../../assets/media/stackEmpty.gif");
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   // const handlePress = () => {
@@ -114,6 +114,14 @@ const BaseCard = ({
           <View>
             {!noMoreStacks && (
               <>
+                <Image
+                  style={{
+                    alignSelf: "stretch",
+                    width: 323 * BCAI.screenRatio,
+                    marginBottom: 10,
+                  }}
+                  source={animation}
+                />
                 <Text
                   style={{
                     ...BCAI.t.largeTitle,

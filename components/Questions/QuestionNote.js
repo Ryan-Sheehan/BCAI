@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
 		alignSelf: "stretch",
 
 		marginBottom: 30 * BCAI.screenRatio,
-		paddingHorizontal: 10 * BCAI.screenRatio,
+		paddingLeft: 20 * BCAI.screenRatio,
 	},
 });

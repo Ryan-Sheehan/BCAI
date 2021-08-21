@@ -324,9 +324,9 @@ export default ControlPanel;
 const styles = StyleSheet.create({
   controlPanelContainer: {
     position: "absolute",
-
+    bottom: 20,
     width: 323 * BCAI.screenRatio,
-    flex: 1,
+
     zIndex: 100,
     elevation: 100,
   },

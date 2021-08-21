@@ -128,7 +128,7 @@ function SettingsScreen({ navigation }) {
             marginBottom: 10,
           }}
         >
-          Why is this important
+          Why is this important?
         </Text>
         <Text
           style={{

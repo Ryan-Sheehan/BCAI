@@ -13,6 +13,7 @@ import {
   Dimensions,
   Keyboard,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { Audio } from "expo-av";
 
@@ -70,33 +71,56 @@ const FullHeightSvg = ({
   cardPos,
   completed,
   backgroundColor,
-}) => (
-  <View
-    animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
-    style={{
-      ...styles.fullHeightSVG,
-      zIndex: cardPos,
-      elevation: cardPos,
-    }}
-  >
-    <Svg
-      style={{
-        transform: [
-          {
-            scale: ratio < 0.56 ? 1 : 1.25,
-          },
-          { translateY: ratio < 0.56 ? 0 : 45 * BCAI.screenRatio },
-        ],
-      }}
-      height="100%"
-      width="100%"
-      viewBox="0 0 375 812"
-    >
-      {children}
-    </Svg>
-  </View>
-);
-
+}) => {
+  const fillers = SCREEN_WIDTH - 353;
+  console.log(fillers);
+  return (
+    <>
+      <View
+        animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
+        style={{
+          ...styles.fullHeightSVG,
+          zIndex: cardPos,
+          elevation: cardPos,
+        }}
+      >
+        <Svg height="100%" width="100%" viewBox="0 0 375 812">
+          {children}
+        </Svg>
+      </View>
+      {Platform.OS !== "ios" && (
+        <>
+          <View
+            animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
+            style={{
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              top: 0,
+              zIndex: cardPos,
+              elevation: cardPos,
+              width: fillers,
+              backgroundColor,
+            }}
+          />
+          <View
+            animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
+            style={{
+              position: "absolute",
+              left: 0,
+              bottom: 0,
+              top: 0,
+              zIndex: cardPos,
+              elevation: cardPos,
+              width: fillers,
+              backgroundColor,
+            }}
+          />
+        </>
+      )}
+    </>
+  );
+};
 const CardVoiceMemo = ({
   voiceMemoLoading,
   secondaryColor,
@@ -441,7 +465,7 @@ const CardImage = ({
             }}
             exit={{ opacity: 0 }}
             transition={{ type: "timing", delay: 200, duration: 500 }}
-            label={"Add Description"}
+            label={"Describe Your Image in Detail"}
             color={secondaryColor}
             icon={<EditIcon />}
             onPress={() => setEditingImageDescription(true)}
@@ -635,7 +659,7 @@ const styles = handleNotch({
     bottom: 0,
     top: {
       notched: 50 * BCAI.screenRatio,
-      notchless: 20 * BCAI.screenRatio,
+      notchless: 35 * BCAI.screenRatio,
     },
 
     alignItems: "center",

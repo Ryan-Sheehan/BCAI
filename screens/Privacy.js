@@ -303,9 +303,10 @@ function SettingsScreen({ navigation }) {
                     ...BCAI.t.body,
                     color: BCAI.c.primary.White,
                     marginBottom: 30,
+                    paddingLeft: 25,
                   }}
                 >
-                  *Donations are periodically published. We cannot gaurantee
+                  * Donations are periodically published. We cannot gaurantee
                   your anonymous contributions have not already downloaded and
                   deployed.
                 </Text>

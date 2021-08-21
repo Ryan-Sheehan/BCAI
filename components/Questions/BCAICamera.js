@@ -62,7 +62,7 @@ const BCAICamera = ({
   const takePicture = async () => {
     try {
       console.log("photo taken");
-      console.log("");
+
       const currentPhoto = await cameraRef.current.takePictureAsync();
       console.log(currentPhoto);
       setPictureTaken(true);
