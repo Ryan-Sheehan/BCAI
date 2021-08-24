@@ -10,6 +10,7 @@ import {
   Linking,
   TouchableOpacity,
   Alert,
+  Dimensions,
 } from "react-native";
 import { Chevron } from "../icons/BCAIIcons";
 import BCAI from "../assets/constants/BCAIStyles";
@@ -17,6 +18,47 @@ import NavBarSecondary from "../components/NavBarSecondary";
 import { getActiveDeck } from "../utils/firebase";
 
 import { resetCardsRespondedTo, resetDonations } from "../utils/localStorage";
+const { height, width } = Dimensions.get("window");
+
+const Animation = () => {
+  const roundToHundreth = (num) => {
+    return Math.round(100 * num) / 100;
+  };
+
+  const ratio = roundToHundreth(width / height);
+  if (ratio === 0.7 || ratio === 0.75) return null;
+  const animation = require("../assets/media/wheelchair.gif");
+  return (
+    <View
+      from={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        type: "timing",
+        duration: 1000,
+      }}
+      style={{
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        left: 0,
+        top: 0,
+        zIndex: -1,
+      }}
+    >
+      <Image
+        style={{
+          width,
+          position: "absolute",
+          bottom: 0,
+
+          zIndex: -1,
+        }}
+        source={animation}
+      />
+    </View>
+  );
+};
 
 const SettingsLineItemToggle = ({ label, value, onValueChange }) => {
   const thumbColor = value ? "#fff" : "#000";
@@ -124,11 +166,11 @@ function SettingsScreen({ navigation, route }) {
       "mailto:hello@dinkins.studio?subject=Binary Calculations App:"
     );
 
-  const animation = require("../assets/media/wheelchair.gif");
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ width: 323 * BCAI.screenRatio, flex: 1 }}>
+      <View
+        style={{ width, paddingHorizontal: 25 * BCAI.screenRatio, flex: 1 }}
+      >
         <NavBarSecondary navigation={navigation} />
         <Text
           style={{
@@ -150,35 +192,7 @@ function SettingsScreen({ navigation, route }) {
         />
         <SettingsLineItemChevron label="Contact Us" onPress={contactUs} />
       </View>
-      <View
-        from={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          delay: 500,
-          duration: 1200,
-        }}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          left: 0,
-          top: 0,
-          zIndex: -1,
-        }}
-      >
-        <Image
-          style={{
-            position: "absolute",
-
-            bottom: 0,
-            left: 0,
-            right: 0,
-
-            width: 373 * BCAI.screenRatio,
-          }}
-          source={animation}
-        />
-      </View>
+      <Animation />
     </SafeAreaView>
   );
 }

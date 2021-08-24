@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
 
-    paddingHorizontal: 10,
-    height: 34,
+    paddingHorizontal: 10 * BCAI.screenRatio,
+    height: 34 * BCAI.screenRatio,
   },
 });

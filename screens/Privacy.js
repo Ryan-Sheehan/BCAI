@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Linking,
+  Dimensions,
 } from "react-native";
 import { getActiveDeck } from "../utils/firebase";
 import { View } from "moti";
@@ -21,6 +22,7 @@ import NavMenu from "../components/NavMenu";
 import ArrowButton from "../components/ArrowButton";
 import { deleteFromFirebase } from "../utils/firebase";
 import { resetCardsRespondedTo, resetDonations } from "../utils/localStorage";
+const { height, width } = Dimensions.get("window");
 
 function SettingsScreen({ navigation }) {
   const [userDonations, setUserDonations] = useState(null);
@@ -88,7 +90,7 @@ function SettingsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        style={{ width: 323 * BCAI.screenRatio, flex: 1 }}
+        style={{ width, paddingHorizontal: 25 * BCAI.screenRatio, flex: 1 }}
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
       >

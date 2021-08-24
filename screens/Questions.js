@@ -39,6 +39,7 @@ import ControlPanel from "../components/Questions/ControlPanel";
 import NavBarPrimary from "../components/NavBarPrimary";
 import animateValue from "../utils/animateValue";
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
+const { height, width } = Dimensions.get("window");
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -329,7 +330,16 @@ const Questions = ({ navigation, route }) => {
 
   const [keyboardStatus, setKeyboardStatus] = useState(undefined);
   const _keyboardDidShow = (e) => {
-    setInputHeight(e.endCoordinates.height - 20);
+    const roundToHundreth = (num) => {
+      return Math.round(100 * num) / 100;
+    };
+
+    const ratio = roundToHundreth(width / height);
+    if (ratio === 0.7 || ratio === 0.75) {
+      setInputHeight(180);
+    } else {
+      setInputHeight(e.endCoordinates.height - 20);
+    }
   };
   const _keyboardDidHide = (e) => {};
 

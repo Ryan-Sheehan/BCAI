@@ -37,6 +37,7 @@ import ControlPanel from "../../components/Questions/ControlPanel";
 import NavBarPrimary from "../../components/NavBarPrimary";
 import EnablePushNotificationsButton from "./EnablePushNotificationsButton";
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
+const { height, width } = Dimensions.get("window");
 
 const BaseCard = ({
   navigation,
@@ -86,7 +87,8 @@ const BaseCard = ({
     <SafeAreaView style={{ ...styles.baseCard, zIndex: 0 }}>
       <View
         style={{
-          width: 323 * BCAI.screenRatio,
+          width,
+          paddingHorizontal: 25 * BCAI.screenRatio,
           flex: 1,
           zIndex: 0,
         }}

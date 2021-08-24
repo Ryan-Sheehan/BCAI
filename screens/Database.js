@@ -17,11 +17,48 @@ import NavMenu from "../components/NavMenu";
 import { Person, Settings, Smiley, Database } from "../icons/BCAIIcons";
 import ArrowButton from "../components/ArrowButton";
 
-const { width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
+const Animation = () => {
+  const roundToHundreth = (num) => {
+    return Math.round(100 * num) / 100;
+  };
 
+  const ratio = roundToHundreth(width / height);
+  if (ratio === 0.7 || ratio === 0.75) return null;
+  const animation = require("../assets/media/hug.gif");
+  return (
+    <View
+      from={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        type: "timing",
+        duration: 1000,
+      }}
+      style={{
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        left: 0,
+        top: 0,
+        zIndex: -1,
+      }}
+    >
+      <Image
+        style={{
+          width,
+          position: "absolute",
+          bottom: 0,
+
+          zIndex: -1,
+        }}
+        source={animation}
+      />
+    </View>
+  );
+};
 function SettingsScreen({ navigation }) {
   const [pushNotifications, setPushNotifications] = useState(false);
-  const animation = require("../assets/media/hug.gif");
 
   const menuItems = [
     {
@@ -36,7 +73,7 @@ function SettingsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        style={{ width: 323 * BCAI.screenRatio, flex: 1 }}
+        style={{ width, paddingHorizontal: 25 * BCAI.screenRatio, flex: 1 }}
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
       >
@@ -70,34 +107,7 @@ function SettingsScreen({ navigation }) {
           onPress={() => Linking.openURL("https://github.com/")}
         />
       </ScrollView>
-      <View
-        from={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{
-          type: "timing",
-          duration: 1000,
-        }}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          left: 0,
-          top: 0,
-          zIndex: -1,
-        }}
-      >
-        <Image
-          style={{
-            width,
-            position: "absolute",
-            bottom: 0,
-
-            zIndex: -1,
-          }}
-          source={animation}
-        />
-      </View>
+      <Animation />
     </SafeAreaView>
   );
 }

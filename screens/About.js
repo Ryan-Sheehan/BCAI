@@ -8,11 +8,13 @@ import {
   Image,
   Switch,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import BCAI from "../assets/constants/BCAIStyles";
 import NavBarSecondary from "../components/NavBarSecondary";
 import NavMenu from "../components/NavMenu";
 import { Person, Settings, Smiley, Database } from "../icons/BCAIIcons";
+const { height, width } = Dimensions.get("window");
 
 const SettingsLineItemToggle = ({ label, value, onValueChange }) => {
   const thumbColor = value ? "#fff" : "#000";
@@ -66,7 +68,7 @@ function SettingsScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-        style={{ width: 323 * BCAI.screenRatio, flex: 1 }}
+        style={{ width, paddingHorizontal: 25 * BCAI.screenRatio, flex: 1 }}
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={false}
       >

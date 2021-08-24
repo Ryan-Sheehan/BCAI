@@ -24,7 +24,7 @@ const getStyle = (inputStyle) => {
       }
     });
     // fixes android ratios
-    if (device === "other") {
+    if (device === "other" || device === "iPadA" || device === "iPadB") {
       device = "notchless";
     }
 

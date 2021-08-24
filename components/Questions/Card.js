@@ -73,6 +73,8 @@ const FullHeightSvg = ({
   backgroundColor,
 }) => {
   const fillers = SCREEN_WIDTH - 353;
+  const fillersIOS = SCREEN_WIDTH - 333;
+
   console.log(fillers);
   return (
     <>
@@ -84,7 +86,17 @@ const FullHeightSvg = ({
           elevation: cardPos,
         }}
       >
-        <Svg height="100%" width="100%" viewBox="0 0 375 812">
+        <Svg
+          height="100%"
+          width="100%"
+          viewBox="0 0 375 812"
+          style={{
+            transform: [
+              { scale: ratio === 0.56 ? 1.2 : 1 },
+              { translateY: ratio === 0.56 ? 50 : 0 },
+            ],
+          }}
+        >
           {children}
         </Svg>
       </View>
@@ -113,6 +125,36 @@ const FullHeightSvg = ({
               zIndex: cardPos,
               elevation: cardPos,
               width: fillers,
+              backgroundColor,
+            }}
+          />
+        </>
+      )}
+      {ratio === 0.75 && (
+        <>
+          <View
+            animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
+            style={{
+              position: "absolute",
+              right: 0,
+              bottom: 0,
+              top: 0,
+              zIndex: cardPos,
+              elevation: cardPos,
+              width: fillersIOS,
+              backgroundColor,
+            }}
+          />
+          <View
+            animate={{ translateX: completed ? -SCREEN_WIDTH * 1.2 : 0 }}
+            style={{
+              position: "absolute",
+              left: 0,
+              bottom: 0,
+              top: 0,
+              zIndex: cardPos,
+              elevation: cardPos,
+              width: fillersIOS,
               backgroundColor,
             }}
           />
@@ -629,19 +671,9 @@ const Card = (
         backgroundColor={primaryColor}
         ratio={ratio}
       >
-        {true ? (
-          <>
-            {order === 1 && <CardThree color={primaryColor} />}
-            {order === 2 && <CardTwo color={primaryColor} />}
-            {order === 3 && <CardOne color={primaryColor} />}
-          </>
-        ) : (
-          <>
-            {order === 1 && <SmallCardThree color={primaryColor} />}
-            {order === 2 && <SmallCardTwo color={primaryColor} />}
-            {order === 3 && <SmallCardOne color={primaryColor} />}
-          </>
-        )}
+        {order === 1 && <CardThree color={primaryColor} />}
+        {order === 2 && <CardTwo color={primaryColor} />}
+        {order === 3 && <CardOne color={primaryColor} />}
       </FullHeightSvg>
     </>
   );
@@ -662,10 +694,15 @@ const styles = handleNotch({
       notchless: 35 * BCAI.screenRatio,
     },
 
-    alignItems: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   containerInner: {
-    width: 323 * BCAI.screenRatio,
+    width,
+    height,
+
+    paddingHorizontal: 25 * BCAI.screenRatio,
+    alignSelf: "flex-start",
     flex: 1,
   },
   fullHeightSVG: {

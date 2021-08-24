@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Dimensions,
 } from "react-native";
 import { Camera } from "expo-camera";
 
@@ -33,6 +34,7 @@ import InputButton from "./InputButton";
 import PrimaryButton from "./PrimaryButton";
 
 import SecondaryButton from "./SecondaryButton";
+const { height, width } = Dimensions.get("window");
 
 import { Svg, Defs, Rect, Mask, Circle } from "react-native-svg";
 
@@ -202,6 +204,14 @@ const ActionBar = ({
 
 const InputInfo = ({ color, inputActive, response, inputInfo }) => {
   const showInfo = !inputActive && response === null && inputInfo !== null;
+  const roundToHundreth = (num) => {
+    return Math.round(100 * num) / 100;
+  };
+
+  const ratio = roundToHundreth(width / height);
+  if (ratio === 0.7 || ratio === 0.75) {
+    return null;
+  }
 
   return (
     <AnimatePresence>
@@ -325,7 +335,8 @@ const styles = StyleSheet.create({
   controlPanelContainer: {
     position: "absolute",
     bottom: 20,
-    width: 323 * BCAI.screenRatio,
+    width,
+    paddingHorizontal: 25 * BCAI.screenRatio,
 
     zIndex: 100,
     elevation: 100,

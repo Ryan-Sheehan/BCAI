@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     alignSelf: "stretch",
-    marginTop: 16,
+    marginTop: 16 * BCAI.screenRatio,
   },
   label: {
     ...BCAI.t.body,
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
   menuButtonInner: {
     flexDirection: "row",
     alignItems: "center",
-    height: 32,
+    height: 32 * BCAI.screenRatio,
   },
 });

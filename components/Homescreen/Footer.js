@@ -7,18 +7,16 @@ import {
   SafeAreaView,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 
 import BCAI from "../../assets/constants/BCAIStyles";
+const { height, width } = Dimensions.get("window");
 
 const Footer = () => {
   return (
     <View style={styles.footer}>
-      <View
-        style={{
-          width: 140,
-        }}
-      >
+      <View style={{ marginRight: 50 }}>
         <Text
           style={{
             ...BCAI.t.footerLabel,
@@ -32,7 +30,6 @@ const Footer = () => {
           style={{
             ...BCAI.t.footerName,
             color: BCAI.c.primary.White,
-            maxWidth: 100,
           }}
         >
           Stephanie{"\n"}
@@ -40,16 +37,13 @@ const Footer = () => {
           Studio
         </Text>
       </View>
-      <View
-        style={{
-          width: 190,
-        }}
-      >
+      <View>
         <Text
           style={{
             ...BCAI.t.footerLabel,
             color: BCAI.c.primary.White,
-            maxWidth: 140,
+
+            flexDirection: "row",
           }}
         >
           With Support From:
@@ -58,7 +52,6 @@ const Footer = () => {
           style={{
             ...BCAI.t.footerName,
             color: BCAI.c.primary.White,
-            maxWidth: 140,
           }}
         >
           Mozilla Foundation {"\n"}
@@ -77,7 +70,8 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     alignItems: "flex-end",
     height: 85 * BCAI.screenRatio,
-    width: 323 * BCAI.screenRatio,
+    width,
+    paddingHorizontal: 25 * BCAI.screenRatio,
     flexDirection: "row",
     position: "absolute",
     bottom: 0,

@@ -1,14 +1,15 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import BCAI from "../../assets/constants/BCAIStyles";
-import { AnimatePresence, Text } from "moti";
+import { AnimatePresence, Text, View } from "moti";
 
 const QuestionNote = ({ text, active }) => {
 	if (!text) return null;
 	return (
 		<AnimatePresence from={false} exitBeforeEnter>
 			{!active && (
-				<Text
+				<View
+					style={{ flexDirection: "row" }}
 					key={text}
 					from={{
 						opacity: 0,
@@ -25,10 +26,17 @@ const QuestionNote = ({ text, active }) => {
 						duration: 400,
 					}}
 					exitTransition={{ delay: 0, duration: 200 }}
-					style={styles.note}
 				>
-					{text}
-				</Text>
+					<Text
+						style={{
+							...BCAI.t.body,
+							marginRight: 10 * BCAI.screenRatio,
+						}}
+					>
+						*
+					</Text>
+					<Text style={styles.note}>{text}</Text>
+				</View>
 			)}
 		</AnimatePresence>
 	);
@@ -43,6 +51,6 @@ const styles = StyleSheet.create({
 		alignSelf: "stretch",
 
 		marginBottom: 30 * BCAI.screenRatio,
-		paddingLeft: 20 * BCAI.screenRatio,
+		paddingRight: 10 * BCAI.screenRatio,
 	},
 });

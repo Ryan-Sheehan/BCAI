@@ -30,7 +30,7 @@ import { getActiveDeck, isDeckPublished } from "../utils/firebase";
 
 import { Person, Settings, Smiley, Database } from "../icons/BCAIIcons";
 import BCAI from "../assets/constants/BCAIStyles";
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const MotiImage = motify(Image)();
 
@@ -62,6 +62,13 @@ function HomeScreenMain({ navigation, handle, activeDeck }) {
 }
 const Animation = ({ source, visible }) => {
   if (!visible) return null;
+  const roundToHundreth = (num) => {
+    return Math.round(100 * num) / 100;
+  };
+
+  const ratio = roundToHundreth(width / height);
+  if (ratio === 0.7 || ratio === 0.75) return null;
+
   return (
     <View
       from={{ opacity: 0 }}
@@ -226,7 +233,9 @@ function HomeScreen({ navigation, route }) {
         }}
         source={header}
       />*/}
-      <View style={{ width: 323 * BCAI.screenRatio, flex: 1 }}>
+      <View
+        style={{ width, paddingHorizontal: 25 * BCAI.screenRatio, flex: 1 }}
+      >
         <NavBarPrimary
           navigation={navigation}
           onLogoPress={() => setHamburgerOpen(false)}

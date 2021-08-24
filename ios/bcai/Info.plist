@@ -47,9 +47,9 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your camera</string>
+	<string>$(PRODUCT_NAME) will use your camera to take a picture that you can use to answer questions.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
+	<string>$(PRODUCT_NAME) will use your mic to record audio that you can use to answer questions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Allow $(PRODUCT_NAME) to access your photos</string>
 	<key>RCTRootViewBackgroundColor</key>
