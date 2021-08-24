@@ -14,7 +14,8 @@
 		},
 		"icon": "./assets/icon.png",
 		"ios": {
-			"buildNumber": "1.0.1",
+			"buildNumber": "2",
+
 			"bundleIdentifier": "com.stephaniedinkins.binarycalculationsareinadequate"
 		},
 		"android": {
