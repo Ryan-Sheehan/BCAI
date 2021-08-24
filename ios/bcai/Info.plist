@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.1</string>
+	<string>1.0.2</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -47,11 +49,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) will use your camera to take a picture that you can use to answer questions.</string>
+	<string>Letting BCAI open the camera will allow you to respon to questions with images. Any pictures submissions are completely anonymous and are not linked to you in any way.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) will use your mic to record audio that you can use to answer questions.</string>
+	<string>Letting BCAI open the camera will allow you to respon to questions with voice or audio recordings. Any audio submissions are completely anonymous and not linked to you in any way.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your photos</string>
+	<string>Letting BCAI open the camera will allow you to respon to questions with images. Any pictures submissions are completely anonymous and are not linked to you in any way.</string>
 	<key>RCTRootViewBackgroundColor</key>
 	<integer>4279440147</integer>
 	<key>UILaunchStoryboardName</key>
