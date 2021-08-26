@@ -26,6 +26,14 @@ export default {
 			title: "Note",
 		},
 		{
+			name: "tags",
+			type: "array",
+			of: [{ type: "string" }],
+			title: "Tags",
+			description:
+				'Examples of these might be "family", "people" or "memory"',
+		},
+		{
 			name: "primaryColor",
 
 			title: "Primary Color",
@@ -40,6 +48,7 @@ export default {
 			},
 			validation: (Rule) => Rule.required(),
 		},
+
 		{
 			name: "secondaryColor",
 

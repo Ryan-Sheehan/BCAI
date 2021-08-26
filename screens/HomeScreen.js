@@ -196,15 +196,10 @@ function HomeScreen({ navigation, route }) {
     }
 
     const isPublished = await isDeckPublished();
-    // if (isPublished) {
-    //   console.log("---------");
-    //   console.log("DECK IS PUBLISHED");
-    //   console.log("---------");
-    // } else {
-    //   console.log("---------");
-    //   console.log("DECK IS NOT PUBLISHED");
-    //   console.log("---------");
-    // }
+    if (!isPublished) {
+      startingStack = 3;
+      startingCard = 3;
+    }
 
     navigation.navigate("Main", {
       screen: "Questions",
