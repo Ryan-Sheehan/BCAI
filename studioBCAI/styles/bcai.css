@@ -1,0 +1,16 @@
+@import url("https://firebasestorage.googleapis.com/v0/b/bcai-86741.appspot.com/o/ABCWhyteInktrap-Light-Trial.otf");
+
+:root {
+	--brand-primary: #000;
+	--brand-primary--inverted: #ff6636;
+	--brand-secondary: #ff6636;
+	--brand-secondary--inverted: #000;
+
+	--main-navigation-color: var(--brand-secondary);
+	--main-navigation-color--inverted: var(--brand-secondary--inverted);
+
+	--theme-pageBG: #f4f4f0;
+	--theme-pageText: #000000;
+	--font-family-sans-serif: "Helvetica Neue";
+	--font-size-base: 18px;
+}
